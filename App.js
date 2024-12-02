@@ -1,67 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, ScrollView, Image } from 'react-native';
+import Detail from './src/pages/Detail';
+import restaurants from './src/data/restaurants';
+import Categories from './src/pages/Categories';
+import Restaurants from './src/pages/Restaurants';
+import Login from './src/pages/Login';
+import Register from './src/pages/Register';
+import MenuItems from './src/pages/MenuItems';
 
 export default function App() {
   return (
-    <SafeAreaView 
-	style={{
-		flex: 1,
-		backgroundColor: "#FFFFFF",
-	}}>
-	<ScrollView  
-		style={{
-			flex: 1,
-			backgroundColor: "#FFFCF3",
-			paddingHorizontal: 24,
-		}}>
-		<View 
-			style={{
-				width: 172,
-				height: 251,
-				backgroundColor: "#FFFFFF",
-				borderRadius: 10,
-				paddingTop: 41,
-				paddingBottom: 60,
-				marginTop: 103,
-				shadowColor: "#0000001C",
-				shadowOpacity: 0.1,
-				shadowOffset: {
-				    width: 0,
-				    height: 2
-				},
-				shadowRadius: 6,
-				elevation: 6,
-			}}>
-			<Image
-				source = {{uri: "https://i.imgur.com/1tMFzp8.png"}} 
-				resizeMode = {"stretch"}
-				style={{
-					borderRadius: 100,
-					height: 104,
-					marginBottom: 26,
-					marginHorizontal: 34,
-				}}
-			/>
-			<Text 
-				style={{
-					color: "#000000",
-					fontSize: 20,
-					marginHorizontal: 57,
-				}}>
-				{"Italian"}
-			</Text>
-		</View>
-	</ScrollView>
-</SafeAreaView>
+    <View style={styles.container}>
+		<StatusBar style="auto" />
+		{/* <Detail menuItem={restaurants[0].menuItems[0]}/> */}
+		{/* <Categories /> */}
+		{/* <Restaurants /> */}
+		<Login />
+		{/* <Register /> */}
+	</View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	container: {
+		backgroundColor: 'white',
+		flex:1,
+  	},
 });
