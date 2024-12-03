@@ -1,29 +1,25 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import renderStars from './renderStars';
+import { MaterialIcons } from '@expo/vector-icons'; // For delivery time icon
 
 const RestaurantCard = ({ restaurant }) => {
-  // Function to render stars based on the rating
-  const renderStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const starType = i < Math.floor(rating)
-        ? 'star'
-        : i < Math.ceil(rating)
-        ? 'star-half-full'
-        : 'star-o';
-      return <Icon key={i} name={starType} size={16} color="goldenrod" style={styles.star} />;
-    });
-  };
-
   return (
     <View style={styles.card}>
       <Image source={{ uri: restaurant.image }} style={styles.image} />
       <View style={styles.info}>
-        <Text style={styles.text}>{restaurant.name}</Text>
-        <View style={styles.rating}>
-          {renderStars(restaurant.rating)}
+        <Text style={styles.name}>{restaurant.name}</Text>
+        <View style={styles.row}>
+          <Text style={styles.cuisine}>{restaurant.cuisine}</Text>
         </View>
-        <Text style={styles.deliveryTime}>{restaurant.deliveryTime}</Text>
+        <View style={styles.row}>
+          {renderStars(restaurant.rating)}
+          <Text style={styles.rating}>{restaurant.rating}</Text>
+        </View>
+        <View style={styles.row}>
+          <MaterialIcons name="delivery-dining" size={16} color="grey" />
+          <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
+        </View>
       </View>
     </View>
   );
@@ -33,45 +29,46 @@ export default RestaurantCard;
 
 const styles = StyleSheet.create({
   card: {
+    flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 10,
-    shadowRadius: 4,
     shadowColor: 'grey',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     elevation: 2,
     marginBottom: 15,
-    width: "40%",
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 10,
+    alignItems: 'center',
   },
   image: {
-    width: '100%',
-    height: 160,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    width: 100,
+    height: 100,
+    borderRadius: 10,
   },
   info: {
-    padding: 10,
-    alignItems: 'center',
+    paddingLeft: 10,
   },
-  text: {
+  name: {
     fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
     marginBottom: 5,
   },
-  rating: {
+  row: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 5,
   },
-  star: {
-    marginHorizontal: 2,
+  cuisine: {
+    fontSize: 14,
+    color: 'grey',
   },
   deliveryTime: {
     fontSize: 14,
     color: 'grey',
+  },
+  rating: {
+    marginLeft: 5,
+    color: 'goldenrod',
+    fontSize: 12,
   },
 });

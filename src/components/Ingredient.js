@@ -16,13 +16,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        backgroundColor: '#F5F5F5',
-        padding: 15,
-        width: "10%",
+        borderRadius: 8, // Reduced for a smaller look
+        backgroundColor: 'lightgrey',
+        padding: 10, // Reduced padding
     },
     image: {
-        width: 50,
-        height: 50,
+        width: 40, // Smaller width
+        height: 40, // Smaller height
     }
 })

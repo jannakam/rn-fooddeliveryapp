@@ -1,52 +1,14 @@
-export const ingredients = [
-    {
-        id: 1,
-        name: 'Bell Pepper',
-        image: require('../../assets/ingredients/bell-pepper.png'),
-    },
-    {
-        id: 2,
-        name: 'Carrot',
-        image: require('../../assets/ingredients/carrot.png'),
-    },
-    {
-        id: 3,
-        name: 'Corn',
-        image: require('../../assets/ingredients/corn.png'),
-    },
-    {
-        id: 4,
-        name: 'Beet',
-        image: require('../../assets/ingredients/beet.png'),
-    },
-    {
-        id: 5,
-        name: 'Broccoli',
-        image: require('../../assets/ingredients/broccoli.png'),
-    },
-    {
-        id: 6,
-        name: 'Eggplant',
-        image: require('../../assets/ingredients/eggplant.png'),
-    },
-    {
-        id: 7,
-        name: 'Garlic',
-        image: require('../../assets/ingredients/garlic.png'),
-    },
-    {
-        id: 8,
-        name: 'Sweet Potato',
-        image: require('../../assets/ingredients/sweet-potato.png'),
-    },
-    {
-        id: 9,
-        name: 'Apricot',
-        image: require('../../assets/ingredients/apricot.png'),
-    },
-    {
-        id: 10,
-        name: 'Banana',
-        image: require('../../assets/ingredients/banana.png'),
-    }
-]
+const ingredients = [
+    { id: 1, name: 'Tomato', image: require('../../assets/ingredients/tomato.png')},
+    { id: 2, name: 'Cheese', image: require('../../assets/ingredients/corn.png')},
+    { id: 3, name: 'Lettuce', image: require('../../assets/ingredients/eggs.png')},
+    { id: 4, name: 'Onion', image: require('../../assets/ingredients/garlic.png')},
+    { id: 5, name: 'Pickles', image: require('../../assets/ingredients/onion.png')},
+    { id: 6, name: 'Bacon', image: require('../../assets/ingredients/mushroom.png')},
+    { id: 7, name: 'Mayo', image: require('../../assets/ingredients/meat.png')},
+    { id: 8, name: 'Ketchup', image: require('../../assets/ingredients/potato.png')},
+    { id: 9, name: 'Mustard', image: require('../../assets/ingredients/seafood.png')},
+    { id: 10, name: 'Beef Patty', image: require('../../assets/ingredients/soy.png')},
+];
+
+export default ingredients;

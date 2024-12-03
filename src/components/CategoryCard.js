@@ -7,11 +7,11 @@ const CategoryCard = ({category}) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
+        <Image source={flags[category.categoryName]} style={styles.image2}/>
         <Image source={cuisines[category.categoryName]} style={styles.image}/>
       </View>
 
       <View style={styles.flagContainer}>
-      <Image source={flags[category.categoryName]} style={styles.image2}/>
       <Text style={styles.text}>{category.categoryName}</Text>
       </View>
     </View>
@@ -22,17 +22,18 @@ export default CategoryCard
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        gap:10,
     },
     image: {
-        width: 150,
-        height: 150,
+        width: 80,
+        height: 80,
     },
     image2: {
         width: 30,
         height: 30,
+        alignSelf: 'flex-start',
     },
     text: {
         fontSize: 16,
@@ -41,15 +42,17 @@ const styles = StyleSheet.create({
     imageContainer: {
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 20,
-      borderWidth: 1,
-      borderColor: 'gray',
+      backgroundColor: 'white',
+      shadowColor: 'grey',
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.2,
+      borderRadius: 10,
       width: 150,
       height: 150,
+      padding: 15,
     },
     flagContainer: {
       alignItems: 'center',
       justifyContent: 'center',
-      flexDirection: 'row',
     }
 })
