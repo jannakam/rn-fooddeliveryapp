@@ -15,7 +15,7 @@ const Categories = () => {
     <SafeAreaView>
       <StatusBar style="auto" />
       <View style={styles.container}>
-        <Text style={styles.title}>Filter By</Text>
+        {/* <Text style={styles.title}>Filter By Cuisine</Text> */}
 
         <View style={styles.categoryContainer}>
           <ScrollView
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    color: 'white',
   },
   categoryContainer: {
     flexDirection: "row",
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 10,
     marginVertical: 10,
+    marginTop: 40,
     gap: 10,
   },
 });

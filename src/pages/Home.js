@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Restaurants from "../components/Restaurants";
 import Categories from "../components/Categories";
+import WavySeparator from "../components/WavySeparator.js";
+
 
 const Home = () => {
   return (
@@ -9,7 +11,11 @@ const Home = () => {
         <View style={styles.categories}>
         <Categories />
         </View>
-
+        
+        <View style={styles.separator}>
+        <WavySeparator />
+        </View>
+        
         <View style={styles.restaurants}>
         <Restaurants />
         </View>
@@ -24,10 +30,13 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     categories: {
-        padding: 10,
-        backgroundColor: "lightgrey",
+        backgroundColor: 'darkslategrey',
+    },
+    separator: {
+        top: -30,
     },
     restaurants: {
         padding: 10,
+        top: -50,
     },
 });

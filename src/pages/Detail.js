@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   Image,
   Dimensions,
-  TextInput,
   TouchableOpacity,
-  ScrollView,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
-  TouchableWithoutFeedback,
+  Animated,
 } from 'react-native';
 import IngredientsList from '../components/IngredientsList';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
 const Detail = ({ menuItem }) => {
   const [quantity, setQuantity] = useState(1);
-  const [notes, setNotes] = useState('');
+  const [fadeAnim] = useState(new Animated.Value(0)); // Animation for image
+
+  // Trigger fade-in animation
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -30,69 +37,63 @@ const Detail = ({ menuItem }) => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
-  const dismissKeyboard = () => {
-    Keyboard.dismiss();
+  const handleAddToCart = () => {
+    // Logic to add item to cart can be implemented here
+    console.log(`Added ${quantity} ${menuItem.name}(s) to the cart.`);
   };
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
+      style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0} 
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
     >
-      <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        <ScrollView contentContainerStyle={styles.container}>
-          {/* SemiCircle Background */}
-          <View style={styles.semiCircle} />
+      {/* SemiCircle Background */}
+      <View style={styles.semiCircle} />
 
-          {/* Item Name and Price */}
-          <View>
-            <Text style={styles.name}>{menuItem.name}</Text>
-            <Text style={styles.price}>{menuItem.price} KWD</Text>
-          </View>
+      {/* Item Name and Price */}
+      <View>
+        <Text style={styles.name}>{menuItem.name}</Text>
+        <Text style={styles.price}>{menuItem.price} KWD</Text>
+      </View>
 
-          {/* Product Image */}
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: menuItem.image }} style={styles.image} />
-          </View>
+      {/* Product Image */}
+      <View style={styles.imageContainer}>
+        <Animated.Image
+          source={{ uri: menuItem.image }}
+          style={[styles.image, { opacity: fadeAnim }]}
+        />
+      </View>
 
-          {/* Quantity Modifier */}
-          <View style={styles.quantityModifier}>
-            <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-              <Icon name="minus" size={16} color="darkseagreen" />
-            </TouchableOpacity>
-            <Text style={styles.quantity}>{quantity}</Text>
-            <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-              <Icon name="plus" size={16} color="darkseagreen" />
-            </TouchableOpacity>
-          </View>
+      {/* Quantity Modifier */}
+      <View style={styles.quantityModifier}>
+        <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
+          <Icon name="minus" size={16} color="darkseagreen" />
+        </TouchableOpacity>
+        <Text style={styles.quantity}>{quantity}</Text>
+        <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
+          <Icon name="plus" size={16} color="darkseagreen" />
+        </TouchableOpacity>
+      </View>
 
-          {/* Ingredients List */}
-          <View style={styles.ingredientsContainer}>
-            <IngredientsList />
-          </View>
+      {/* Ingredients List */}
+      <View style={styles.ingredientsContainer}>
+        <IngredientsList />
+      </View>
 
-          {/* Description */}
-          <View style={styles.detailsContainer}>
-            <View style={styles.descriptionContainer}>
-              <Text>{menuItem.description}</Text>
-            </View>
+      {/* Description */}
+      <View style={styles.detailsContainer}>
+        <Text>
+          {menuItem.description.length > 100
+            ? `${menuItem.description.slice(0, 100)}...`
+            : menuItem.description}
+        </Text>
+      </View>
 
-            {/* Custom Notes Section */}
-            <View style={styles.notesContainer}>
-              <Text style={styles.notesTitle}>Add Notes</Text>
-              <TextInput
-                style={styles.notesInput}
-                placeholder="Add any special requests or notes here..."
-                placeholderTextColor="grey"
-                value={notes}
-                onChangeText={setNotes}
-                multiline
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </TouchableWithoutFeedback>
+      {/* Add to Cart Button */}
+      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+        <Text style={styles.addToCartText}>Add to Cart</Text>
+      </TouchableOpacity>
     </KeyboardAvoidingView>
   );
 };
@@ -101,15 +102,16 @@ export default Detail;
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
+    flex: 1,
     backgroundColor: 'white',
+    justifyContent: 'space-between',
   },
   semiCircle: {
     position: 'absolute',
     top: 0,
     alignSelf: 'center',
-    width: '120%',
-    height: height * 0.2,
+    width: '125%',
+    height: height * 0.23,
     backgroundColor: 'darkslategrey',
     borderBottomLeftRadius: width,
     borderBottomRightRadius: width,
@@ -118,7 +120,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     zIndex: 10,
     alignItems: 'center',
-    marginTop: height * 0.015,
+    // marginTop: height * 0.01,
   },
   image: {
     width: width * 0.5,
@@ -126,66 +128,58 @@ const styles = StyleSheet.create({
     borderRadius: (width * 0.5) / 2,
   },
   detailsContainer: {
-    flex: 1,
     paddingHorizontal: 20,
   },
   name: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 5,
+    marginTop: 10,
     textAlign: 'center',
     color: 'white',
     zIndex: 10,
   },
   price: {
-    fontSize: 18,
-    marginBottom: 10,
+    fontSize: 20,
+    marginVertical: 5,
     textAlign: 'center',
     zIndex: 10,
     color: 'white',
   },
   ingredientsContainer: {
-    height: height * 0.14,
-  },
-  notesContainer: {
-    marginTop: 20,
-  },
-  notesTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  notesInput: {
-    borderWidth: 1,
-    borderColor: 'lightgrey',
-    borderRadius: 8,
-    padding: 10,
-    fontSize: 14,
-    backgroundColor: '#f9f9f9',
+    height: height * 0.1,
+    marginTop: -20,
   },
   quantityModifier: {
-    width: '25%',
-    marginVertical: 15,
-    alignContent: 'center',
-    alignSelf: 'center',
-    justifyContent: 'center',
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-    borderRadius: 20,
-    padding: 10,
-    elevation: 3,
-    zIndex: 10,
+    paddingVertical: 10,
+    alignSelf: 'center',
   },
   button: {
-    padding: 5,
-    borderRadius: 5,
+    padding: 10,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#E6E6E6',
   },
   quantity: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'darkslategrey',
+  },
+  addToCartButton: {
+    backgroundColor: 'seagreen',
+    paddingVertical: 15,
+    marginHorizontal: 20,
+    marginBottom: 40,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  addToCartText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

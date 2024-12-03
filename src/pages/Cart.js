@@ -35,18 +35,18 @@ const CartPage = () => {
         renderItem={({ item }) => (
           <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
         )}
+        contentContainerStyle={styles.listContent}
       />
       {/* Total Price */}
       <View style={styles.checkoutContainer}>
-        <Text style={styles.total}>Total: </Text>
-        <Text style={styles.total2}>{calculateTotal()} KWD</Text>
+        <Text style={styles.totalLabel}>Total:</Text>
+        <Text style={styles.totalAmount}>{calculateTotal()} KWD</Text>
       </View>
 
       {/* Checkout Button */}
       <TouchableOpacity style={styles.checkoutButton}>
         <Text style={styles.checkoutButtonText}>Checkout</Text>
       </TouchableOpacity>
-      
     </View>
   );
 };
@@ -56,41 +56,52 @@ export default CartPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
-    padding: 15,
-    width: '100%',
+    backgroundColor: '#f9f9f9',
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    width: "100%",
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#333',
     marginBottom: 20,
   },
-  total: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginVertical: 10,
+  listContent: {
+    paddingBottom: 20,
   },
-  total2: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
+  totalLabel: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#555',
   },
-  checkoutButton: {
-    backgroundColor: 'darkslategrey',
-    padding: 15,
-    marginBottom: 30,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  checkoutButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 14,
+  totalAmount: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#333',
   },
   checkoutContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap:20,
-  }
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  checkoutButton: {
+    backgroundColor: 'seagreen',
+    paddingVertical: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginVertical: 15,
+  },
+  checkoutButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
+  },
 });

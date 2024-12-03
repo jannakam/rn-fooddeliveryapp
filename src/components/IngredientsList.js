@@ -27,13 +27,13 @@ const IngredientsList = () => {
   
   const styles = StyleSheet.create({
     container: {
-      marginTop: 20,
+      marginTop: 5,
       paddingHorizontal: 20,
     },
     title: {
       fontSize: 20,
       fontWeight: 'bold',
-      marginBottom: 10,
+      marginBottom: 5,
       color: 'darkslategrey'
     },
     scrollContainer: {

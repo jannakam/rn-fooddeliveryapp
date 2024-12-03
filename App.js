@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
 import Detail from "./src/pages/Detail";
 import Login from "./src/pages/Login";
 import Register from "./src/pages/Register";
@@ -12,13 +11,15 @@ import Header from "./src/components/Header";
 import restaurants from "./src/data/restaurants";
 import Categories from "./src/components/Categories";
 import Home from "./src/pages/Home";
+import Profile from "./src/pages/Profile";
+import DiscoverPage from "./src/pages/DiscoverPage";
 
 export default function App() {
   return (
     <Fragment>
       <SafeAreaView style={styles.safeAreaTop} />
+      {/* This is to make the header and footer different colors */}
       <SafeAreaView style={styles.safeAreaBottom}>
-        {/* Top Safe Area */}
         <View>
           <StatusBar barStyle={"light-content"} />
           <Header />
@@ -26,13 +27,14 @@ export default function App() {
 
         {/* Main Content */}
         <View style={styles.content}>
-          {/* <Detail menuItem={restaurants[0].menuItems[0]}/> */}
+          <Detail menuItem={restaurants[0].menuItems[0]}/>
           {/* <MenuItems restaurant={restaurants[0]} /> */}
-          {/* <Categories /> */}
           {/* <Login /> */}
           {/* <Register /> */}
           {/* <Cart /> */}
-		  <Home />
+		      {/* <Home /> */}
+          {/* <Profile /> */}
+          {/* <DiscoverPage /> */}
         </View>
 
         {/* Bottom Navbar */}
