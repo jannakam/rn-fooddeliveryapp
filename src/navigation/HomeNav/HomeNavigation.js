@@ -6,6 +6,7 @@ import DiscoverPage from "../../pages/DiscoverPage";
 import Profile from "../../pages/Profile";
 import MenuItems from "../../pages/MenuItems";
 import Cart from "../../pages/Cart";
+import Detail from "../../pages/Detail";
 import BottomNavigation from "../BottomNav/BottomNavigation";
 import Header from "../../components/Header";
 
@@ -25,6 +26,7 @@ export const HomeStack = () => {
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen name="MenuItem" component={MenuItems} />
+      <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );
@@ -35,6 +37,7 @@ export const DiscoverStack = () => {
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="DiscoverScreen" component={DiscoverPage} />
       <Stack.Screen name="MenuItem" component={MenuItems} />
+      <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );

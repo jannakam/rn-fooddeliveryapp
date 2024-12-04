@@ -1,11 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import renderStars from './renderStars';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+
 const RestaurantCard = ({ restaurant }) => {
+  const navigation = useNavigation();
   // Generate random number of reviews
   const randomReviews = Math.floor(Math.random() * 500) + 50;
-
 
   // Determine the tag color
   const getTagStyle = (rating) => {
@@ -17,7 +19,10 @@ const RestaurantCard = ({ restaurant }) => {
   };
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity 
+      style={styles.card}
+      onPress={() => navigation.navigate('MenuItem', { restaurant })}
+    >
       <Image source={{ uri: restaurant.image }} style={styles.image} />
       <View style={styles.info}>
         <View style={styles.topRow}>
@@ -38,7 +43,7 @@ const RestaurantCard = ({ restaurant }) => {
           <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -28,14 +28,14 @@ const CartItemCard = ({ menuItem, updateQuantity }) => {
             onPress={() => updateQuantity(menuItem.id, Math.max(0, menuItem.quantity - 1))}
             style={styles.button}
           >
-            <Icon name="minus" size={16} color="white" />
+            <Icon name="minus" size={12} color="white" />
           </TouchableOpacity>
           <Text style={styles.quantity}>{menuItem.quantity}</Text>
           <TouchableOpacity
             onPress={() => updateQuantity(menuItem.id, menuItem.quantity + 1)}
             style={styles.button}
           >
-            <Icon name="plus" size={16} color="white" />
+            <Icon name="plus" size={12} color="white" />
           </TouchableOpacity>
         </View>
       </View>
@@ -54,15 +54,12 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.2,
     // elevation: 2,
     // borderRadius: 10,
-    padding: 10,
-    marginBottom: 10,
     alignItems: 'center',
   },
   image: {
     width: 150,
     height: 150,
     borderRadius: 40, // Circular image
-    marginRight: 10,
   },
   detailsContainer: {
     flex: 1,
@@ -104,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   quantity: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
     marginHorizontal: 10,
   },

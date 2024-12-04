@@ -2,8 +2,10 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState } from "react";
 import myFood from "../data/myFood";
+import { useNavigation } from "@react-navigation/native";
 
-const MenuItemCard = ({ menuItem, namewithRestaurant, onAdd }) => {
+const MenuItemCard = ({ menuItem, onAdd }) => {
+  const navigation = useNavigation();
   const [quantity, setQuantity] = useState(0);
 
   const increaseQuantity = () => {
@@ -21,9 +23,11 @@ const MenuItemCard = ({ menuItem, namewithRestaurant, onAdd }) => {
     }
   };
 
-
   return (
-    <View style={styles.wrapper}>
+    <TouchableOpacity 
+      style={styles.wrapper}
+      onPress={() => navigation.navigate('Detail', { menuItem })}
+    >
       {/* Image positioned absolutely */}
       <View style={styles.imageContainer}>
         <Image
@@ -34,7 +38,7 @@ const MenuItemCard = ({ menuItem, namewithRestaurant, onAdd }) => {
 
       {/* Card content */}
       <View style={styles.container}>
-        <Text style={styles.itemName}>{menuItem.namewithRestaurant}</Text>
+        <Text style={styles.itemName}>{menuItem.name}</Text>
         <Text style={styles.itemDescription}>
           {menuItem.description.length > 50
             ? `${menuItem.description.slice(0, 50)}...`
@@ -62,7 +66,7 @@ const MenuItemCard = ({ menuItem, namewithRestaurant, onAdd }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -70,7 +74,7 @@ export default MenuItemCard;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 20, // Space between cards
+    marginVertical: 25, // Space between cards
   },
   imageContainer: {
     position: "absolute",
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",
-    marginTop: 40,
+    marginTop: 50,
   },
   itemDescription: {
     color: "#4b4376",

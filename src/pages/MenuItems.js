@@ -20,7 +20,9 @@ const getTagStyle = (rating) => {
   return { label: "Poor", color: "darkred" };
 };
 
-const MenuItems = ({ restaurant }) => {
+const MenuItems = ({ route }) => {
+  const { restaurant } = route.params;
+
   if (!restaurant) {
     return (
       <View style={styles.errorContainer}>
@@ -70,7 +72,12 @@ const MenuItems = ({ restaurant }) => {
             <View style={styles.items}>
               {restaurant.menuItems.map((menuItem, index) => (
                 <View key={index} style={styles.gridItem}>
-                  <MenuItemCard menuItem={menuItem} />
+                  <MenuItemCard 
+                    menuItem={{
+                      ...menuItem,
+                      restaurant: restaurant
+                    }}
+                  />
                 </View>
               ))}
             </View>

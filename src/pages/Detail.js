@@ -17,7 +17,8 @@ import myFood from '../data/myFood';
 
 const { width, height } = Dimensions.get('window');
 
-const Detail = ({ menuItem }) => {
+const Detail = ({ route }) => {
+  const { menuItem } = route.params;
   const [quantity, setQuantity] = useState(1);
   const [fadeAnim] = useState(new Animated.Value(0)); // Animation for image
 
@@ -61,7 +62,7 @@ const Detail = ({ menuItem }) => {
       {/* Product Image */}
       <View style={styles.imageContainer}>
         <Animated.Image
-          source={myFood[menuItem.name]}
+          source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }}
           style={[styles.image, { opacity: fadeAnim }]}
         />
       </View>
