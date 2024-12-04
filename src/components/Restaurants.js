@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 470,
     paddingHorizontal: 10,
+    backgroundColor: "#fff",
   },
   gradient: {
     position: "absolute",

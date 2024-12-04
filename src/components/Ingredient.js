@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 8, // Reduced for a smaller look
-        backgroundColor: 'lightgrey',
+        backgroundColor: '#e9bcb9',
         padding: 10, // Reduced padding
     },
     image: {

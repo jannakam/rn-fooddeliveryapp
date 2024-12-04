@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333',
+    color: '#442e54',
   },
   subtitle: {
     fontSize: 16,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   button: {
-    backgroundColor: 'powderblue',
+    backgroundColor: '#4b4376',
     color: 'white',
     padding: 15,
     width: '100%',

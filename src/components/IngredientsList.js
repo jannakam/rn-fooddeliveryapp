@@ -34,7 +34,7 @@ const IngredientsList = () => {
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 5,
-      color: 'darkslategrey'
+      color: '#4b4376'
     },
     scrollContainer: {
       flexDirection: 'row',

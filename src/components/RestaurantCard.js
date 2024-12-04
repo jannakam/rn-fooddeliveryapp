@@ -1,8 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import renderStars from './renderStars';
-import { MaterialIcons } from '@expo/vector-icons'; // For delivery time icon
-
+import { Feather } from '@expo/vector-icons';
 const RestaurantCard = ({ restaurant }) => {
   // Generate random number of reviews
   const randomReviews = Math.floor(Math.random() * 500) + 50;
@@ -35,7 +34,7 @@ const RestaurantCard = ({ restaurant }) => {
           <Text style={styles.reviews}> ({randomReviews} reviews)</Text>
         </View>
         <View style={styles.row}>
-          <MaterialIcons name="clock" size={16} color="grey" />
+          <Feather name="clock" size={16} color="#ae445a" />
           <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
         </View>
       </View>
@@ -77,6 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     flex: 1,
+    color: "#4b4376"
   },
   ratingBadge: {
     borderRadius: 5,
@@ -100,16 +100,16 @@ const styles = StyleSheet.create({
   },
   reviews: {
     marginLeft: 5,
-    color: 'grey',
+    color: '#4b4376',
     fontSize: 12,
   },
   deliveryTime: {
     fontSize: 14,
-    color: 'grey',
+    color: '#ae445a',
   },
   category: {
     fontSize: 12,
-    color: 'grey',
+    color: '#4b4376',
     marginVertical: 5,
   },
 });

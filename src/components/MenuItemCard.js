@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState } from "react";
+import myFood from "../data/myFood";
 
 const MenuItemCard = ({ menuItem, onAdd }) => {
   const [quantity, setQuantity] = useState(0);
@@ -24,7 +25,7 @@ const MenuItemCard = ({ menuItem, onAdd }) => {
     <View style={styles.wrapper}>
       {/* Image positioned absolutely */}
       <View style={styles.imageContainer}>
-        <Image source={{ uri: menuItem.image }} style={styles.image} />
+        <Image source={myFood[menuItem.name]} style={styles.image} />
       </View>
 
       {/* Card content */}
@@ -43,11 +44,11 @@ const MenuItemCard = ({ menuItem, onAdd }) => {
           {/* Quantity Modifier */}
           <View style={styles.quantityModifier}>
             <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-              <Icon name="minus" size={16} color="darkseagreen" />
+              <Icon name="minus" size={16} color="white" />
             </TouchableOpacity>
             <Text style={styles.quantity}>{quantity}</Text>
             <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-              <Icon name="plus" size={16} color="darkseagreen" />
+              <Icon name="plus" size={16} color="white" />
             </TouchableOpacity>
           </View>
 
@@ -71,18 +72,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -10, // Position the image above the card
     left: "50%",
-    transform: [{ translateX: -50 }], // Center the image horizontally
+    transform: [{ translateX: -75 }], // Center the image horizontally
     zIndex: 1, // Place the image above the card
   },
   image: {
-    width: 90, // Adjust image size
+    width: 150, // Adjust image size
     height: 90,
     borderRadius: 40, // Make the image circular
-    borderWidth: 4,
     borderColor: "white", // Add a border to match card background
   },
   container: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(233,188,185,0.2)",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   itemDescription: {
-    color: "grey",
+    color: "#4b4376",
     marginBottom: 5,
     textAlign: "center",
     fontSize: 12,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: "bold",
     fontSize: 14,
-    color: "darkseagreen",
+    color: "#442e54",
     textAlign: "center",
   },
   actionsRow: {
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 5,
     borderRadius: 15,
-    backgroundColor: "#F5F5F5",
+    backgroundColor: "#4b4376",
     alignItems: "center",
     justifyContent: "center",
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addButton: {
-    backgroundColor: "seagreen",
+    backgroundColor: "#ae445a",
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 15,

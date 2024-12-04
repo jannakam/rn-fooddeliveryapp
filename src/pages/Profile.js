@@ -14,21 +14,21 @@ const ProfilePage = () => {
           <Text style={styles.label}>Name:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>Janna Almuqaisib</Text>
-            <MaterialIcons name="edit" size={20} color="#666" />
+            <MaterialIcons name="edit" size={20} color="#ae445a" />
           </View>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Email:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>janna@gmail.com</Text>
-            <MaterialIcons name="edit" size={20} color="#666" />
+            <MaterialIcons name="edit" size={20} color="#ae445a" />
           </View>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Phone:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>+965 9449 9371</Text>
-            <MaterialIcons name="edit" size={20} color="#666" />
+            <MaterialIcons name="edit" size={20} color="#ae445a" />
           </View>
         </View>
       </View>
@@ -38,7 +38,7 @@ const ProfilePage = () => {
         <Text style={styles.sectionTitle}>Payment Methods</Text>
         <View style={styles.detailRow}>
           <Text style={styles.value}>Visa **** 1234</Text>
-          <MaterialIcons name="edit" size={20} color="#666" />
+          <MaterialIcons name="edit" size={20} color="#ae445a" />
         </View>
       </View>
 
@@ -57,18 +57,16 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    backgroundColor: "white",
     width: "100%",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#333",
     marginBottom: 20,
   },
   section: {
     marginBottom: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 8,
     shadowColor: "#000",
@@ -79,7 +77,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#333",
     marginBottom: 10,
   },
   detailRow: {
@@ -90,12 +87,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: "#555",
+    color: "#442e54", // Updated label color
     fontWeight: "500",
   },
   value: {
     fontSize: 16,
-    color: "#333",
+    color: "#4b4376", // Updated value color
   },
   editable: {
     flexDirection: "row",
@@ -106,12 +103,12 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    backgroundColor: "seagreen",
+    backgroundColor: "#4b4376", // Updated button color
     borderRadius: 5,
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: "white",
     fontSize: 16,
     fontWeight: "500",
   },

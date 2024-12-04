@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Dimensions } from 'react-native';
 
-const WavySeparator = ({ color = 'darkslategray', height = 100 }) => {
+const WavySeparator = ({ color = '#442e54', height = 100 }) => {
   const { width: screenWidth } = Dimensions.get('window');
   return (
     <View style={{ width: screenWidth, height }}>

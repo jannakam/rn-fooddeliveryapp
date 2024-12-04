@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     categories: {
-        backgroundColor: 'darkslategrey',
+        backgroundColor: '#442e54',
     },
     separator: {
         top: -30,

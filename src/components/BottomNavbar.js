@@ -10,7 +10,7 @@ const BottomNavbar = () => {
     <View style={styles.navbar}>
       {/* Home Tab */}
       <TouchableOpacity style={styles.navItem}>
-        <Feather name="home" size={24} color="black" />
+        <Feather name="home" size={24} color="white" />
       </TouchableOpacity>
 
       {/* Explore Tab (Center Tab) */}
@@ -22,7 +22,7 @@ const BottomNavbar = () => {
 
       {/* Orders Tab */}
       <TouchableOpacity style={styles.navItem}>
-        <Feather name="user" size={24} color="black" />
+        <Feather name="user" size={24} color="white" />
       </TouchableOpacity>
     </View>
     </SafeAreaView>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingVertical: 10,
-    backgroundColor: "#fff",
+    backgroundColor: "#ae445a",
     borderTopWidth: 1,
     borderColor: "#ddd",
     zIndex:30,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   navText: {
     fontSize: 12,
     marginTop: 4,
-    color: "black",
+    color: "#442e54",
   },
   exploreButton: {
     alignItems: "center",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "darkslategrey",
+    backgroundColor: "#442e54",
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   exploreText: {
     fontSize: 12,
     marginTop: 8,
-    color: "black",
+    color: "white",
   },
 });
 

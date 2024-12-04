@@ -9,7 +9,7 @@ const Header = () => {
       
       <View style={styles.backButton}>
       <TouchableOpacity style={styles.roundBorder}>
-        <Feather name="arrow-left" size={24} color="darkslategrey" />
+        <Feather name="arrow-left" size={24} color="#442e54" />
       </TouchableOpacity>
       </View>
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "evenly",
     justifyContent: "space-between",
-    backgroundColor: "darkslategrey",
+    backgroundColor: "#442e54",
     width: "100%",
   },
   backButton: {

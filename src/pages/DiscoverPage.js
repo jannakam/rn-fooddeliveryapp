@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   keywordLabel: {
-    backgroundColor: "seagreen",
+    backgroundColor: "#4b4376",
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 20,

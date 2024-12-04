@@ -3,16 +3,15 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native
 import CartItemCard from '../components/CartItemCard';
 import restaurants from '../data/restaurants';
 
-const CartPage = () => {
-  // Initialize cart items with a quantity of 1
+const Cart = () => {
   const [cartItems, setCartItems] = useState(
-    [restaurants[0].menuItems[0], restaurants[1].menuItems[1]].map((item) => ({
+    [restaurants[0].menuItems[0], restaurants[2].menuItems[0]].map((item) => ({
       ...item,
-      quantity: 1, // Add a default quantity
+      quantity: 1, // Initialize each item's quantity
     }))
   );
 
-  // Update quantity in the cart
+  // Update quantity function
   const updateQuantity = (id, newQuantity) => {
     setCartItems((prevItems) =>
       prevItems.map((item) =>
@@ -23,7 +22,9 @@ const CartPage = () => {
 
   // Calculate total price
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    return cartItems
+      .reduce((total, item) => total + item.price * item.quantity, 0)
+      .toFixed(2);
   };
 
   return (
@@ -37,12 +38,11 @@ const CartPage = () => {
         )}
         contentContainerStyle={styles.listContent}
       />
-      {/* Total Price */}
+      {/* Total Price Section */}
       <View style={styles.checkoutContainer}>
         <Text style={styles.totalLabel}>Total:</Text>
         <Text style={styles.totalAmount}>{calculateTotal()} KWD</Text>
       </View>
-
       {/* Checkout Button */}
       <TouchableOpacity style={styles.checkoutButton}>
         <Text style={styles.checkoutButtonText}>Checkout</Text>
@@ -51,7 +51,7 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#442e54',
     marginBottom: 20,
   },
   listContent: {
@@ -73,12 +73,12 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#555',
+    color: '#442e54',
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#333',
+    color: '#442e54',
   },
   checkoutContainer: {
     flexDirection: 'row',
@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#fff',
     borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
+    // shadowColor: '#000',
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+    // shadowOffset: { width: 0, height: 2 },
   },
   checkoutButton: {
-    backgroundColor: 'seagreen',
+    backgroundColor: '#4b4376',
     paddingVertical: 12,
     borderRadius: 5,
     alignItems: 'center',

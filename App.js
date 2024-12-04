@@ -27,8 +27,8 @@ export default function App() {
 
         {/* Main Content */}
         <View style={styles.content}>
-          <Detail menuItem={restaurants[0].menuItems[0]}/>
-          {/* <MenuItems restaurant={restaurants[0]} /> */}
+          {/* <Detail menuItem={restaurants[0].menuItems[1]}/> */}
+          <MenuItems restaurant={restaurants[0]} />
           {/* <Login /> */}
           {/* <Register /> */}
           {/* <Cart /> */}
@@ -48,7 +48,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   safeAreaTop: {
-    backgroundColor: "darkslategrey",
+    backgroundColor: "#442e54",
     flex: 0,
   },
   content: {
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   safeAreaBottom: {
-    backgroundColor: "white",
+    backgroundColor: "#ae445a",
     flex: 1,
   },
 });

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)', 
+    backgroundColor: 'rgba(233,188,185,0.2)', 
     shadowColor: 'grey',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,

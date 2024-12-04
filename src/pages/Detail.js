@@ -13,6 +13,7 @@ import {
 import IngredientsList from '../components/IngredientsList';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { LinearGradient } from 'expo-linear-gradient';
+import myFood from '../data/myFood';
 
 const { width, height } = Dimensions.get('window');
 
@@ -60,7 +61,7 @@ const Detail = ({ menuItem }) => {
       {/* Product Image */}
       <View style={styles.imageContainer}>
         <Animated.Image
-          source={{ uri: menuItem.image }}
+          source={myFood[menuItem.name]}
           style={[styles.image, { opacity: fadeAnim }]}
         />
       </View>
@@ -68,11 +69,11 @@ const Detail = ({ menuItem }) => {
       {/* Quantity Modifier */}
       <View style={styles.quantityModifier}>
         <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-          <Icon name="minus" size={16} color="darkseagreen" />
+          <Icon name="minus" size={16} color="white" />
         </TouchableOpacity>
         <Text style={styles.quantity}>{quantity}</Text>
         <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-          <Icon name="plus" size={16} color="darkseagreen" />
+          <Icon name="plus" size={16} color="white" />
         </TouchableOpacity>
       </View>
 
@@ -112,7 +113,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '125%',
     height: height * 0.23,
-    backgroundColor: 'darkslategrey',
+    backgroundColor: '#442e54',
     borderBottomLeftRadius: width,
     borderBottomRightRadius: width,
     zIndex: 1,
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     // marginTop: height * 0.01,
   },
   image: {
-    width: width * 0.5,
+    width: width * 0.8,
     height: width * 0.5,
     borderRadius: (width * 0.5) / 2,
   },
@@ -139,11 +140,11 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   price: {
-    fontSize: 20,
+    fontSize: 18,
     marginVertical: 5,
     textAlign: 'center',
     zIndex: 10,
-    color: 'white',
+    color: '#e9bcb9',
   },
   ingredientsContainer: {
     height: height * 0.1,
@@ -162,15 +163,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E6E6E6',
+    backgroundColor: '#ae445a',
   },
   quantity: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'darkslategrey',
+    color: '#4b4376',
   },
   addToCartButton: {
-    backgroundColor: 'seagreen',
+    backgroundColor: '#4b4376',
     paddingVertical: 15,
     marginHorizontal: 20,
     marginBottom: 40,
