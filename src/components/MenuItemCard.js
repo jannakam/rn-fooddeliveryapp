@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState } from "react";
 import myFood from "../data/myFood";
 
-const MenuItemCard = ({ menuItem, onAdd }) => {
+const MenuItemCard = ({ menuItem, namewithRestaurant, onAdd }) => {
   const [quantity, setQuantity] = useState(0);
 
   const increaseQuantity = () => {
@@ -21,16 +21,20 @@ const MenuItemCard = ({ menuItem, onAdd }) => {
     }
   };
 
+
   return (
     <View style={styles.wrapper}>
       {/* Image positioned absolutely */}
       <View style={styles.imageContainer}>
-        <Image source={myFood[menuItem.name]} style={styles.image} />
+        <Image
+          source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }}
+          style={styles.image}
+        />
       </View>
 
       {/* Card content */}
       <View style={styles.container}>
-        <Text style={styles.itemName}>{menuItem.name}</Text>
+        <Text style={styles.itemName}>{menuItem.namewithRestaurant}</Text>
         <Text style={styles.itemDescription}>
           {menuItem.description.length > 50
             ? `${menuItem.description.slice(0, 50)}...`
@@ -70,19 +74,19 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: "absolute",
-    top: -10, // Position the image above the card
+    top: -60, // Position the image above the card
     left: "50%",
-    transform: [{ translateX: -75 }], // Center the image horizontally
+    transform: [{ translateX: -90 }], // Center the image horizontally
     zIndex: 1, // Place the image above the card
   },
   image: {
-    width: 150, // Adjust image size
-    height: 90,
-    borderRadius: 40, // Make the image circular
-    borderColor: "white", // Add a border to match card background
+    width: 180, // Larger size
+    height: 180,
+    borderRadius: 100, // Half of the new dimensions
   },
+  
   container: {
-    backgroundColor: "rgba(233,188,185,0.2)",
+    backgroundColor: "rgba(233,188,185,0.1)",
     shadowColor: "grey",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,

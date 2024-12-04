@@ -7,7 +7,7 @@ const CartItemCard = ({ menuItem, updateQuantity }) => {
   return (
     <View style={styles.container}>
       {/* Image on the left */}
-      <Image source={myFood[menuItem.name]} style={styles.image} />
+      <Image source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }} style={styles.image} />
 
       {/* Item Details and Quantity Modifier */}
       <View style={styles.detailsContainer}>
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 120,
-    height: 120,
+    width: 150,
+    height: 150,
     borderRadius: 40, // Circular image
     marginRight: 10,
   },

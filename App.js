@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, createContext, useContext, useState } from "react";
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
 import Detail from "./src/pages/Detail";
 import Login from "./src/pages/Login";
@@ -13,39 +13,25 @@ import Categories from "./src/components/Categories";
 import Home from "./src/pages/Home";
 import Profile from "./src/pages/Profile";
 import DiscoverPage from "./src/pages/DiscoverPage";
+import AuthNavigation from "./src/navigation/AuthNav/AuthNavigation";
+import HomeNavigation from "./src/navigation/HomeNav/HomeNavigation";
+import { NavigationContainer } from "@react-navigation/native";
+
+const AuthContext = createContext();
 
 export default function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  
   return (
-    <Fragment>
-      <SafeAreaView style={styles.safeAreaTop} />
-      {/* This is to make the header and footer different colors */}
-      <SafeAreaView style={styles.safeAreaBottom}>
-        <View>
-          <StatusBar barStyle={"light-content"} />
-          <Header />
-        </View>
-
-        {/* Main Content */}
-        <View style={styles.content}>
-          {/* <Detail menuItem={restaurants[0].menuItems[1]}/> */}
-          <MenuItems restaurant={restaurants[0]} />
-          {/* <Login /> */}
-          {/* <Register /> */}
-          {/* <Cart /> */}
-		      {/* <Home /> */}
-          {/* <Profile /> */}
-          {/* <DiscoverPage /> */}
-        </View>
-
-        {/* Bottom Navbar */}
-        <View>
-          <BottomNavbar />
-        </View>
-      </SafeAreaView>
-    </Fragment>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+      <NavigationContainer>
+        {isAuthenticated ? <HomeNavigation /> : <AuthNavigation />}
+      </NavigationContainer>
+    </AuthContext.Provider>
+    
   );
 }
-
 const styles = StyleSheet.create({
   safeAreaTop: {
     backgroundColor: "#442e54",
@@ -61,7 +47,32 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   safeAreaBottom: {
-    backgroundColor: "#ae445a",
+    backgroundColor: "#442e54",
     flex: 1,
   },
 });
+
+export const useAuth = () => useContext(AuthContext);
+
+
+
+// <Fragment>
+//   <SafeAreaView style={styles.safeAreaTop} />
+//   <SafeAreaView style={styles.safeAreaBottom}>
+//     <View>
+//       <StatusBar barStyle={"light-content"} />
+//       <Header />
+//     </View> 
+
+//     <View style={styles.content}>
+//       {/* <Detail menuItem={restaurants[0].menuItems[0]}/> */}
+//       {/* <Home /> */}
+//       {/* <Profile /> */}
+//       {/* <DiscoverPage /> */}
+//     </View>
+
+//     <View>
+//       <BottomNavbar />
+//     </View>
+//   </SafeAreaView>
+// </Fragment> 

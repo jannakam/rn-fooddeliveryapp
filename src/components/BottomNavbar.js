@@ -1,5 +1,19 @@
 // BottomNavbar.js
 
+
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// const Tab = createBottomTabNavigator();
+
+// function MyTabs() {
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen name="Home" component={HomeScreen} />
+//       <Tab.Screen name="Profile" component={ProfileScreen} />
+//     </Tab.Navigator>
+//   );
+// }
+
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
@@ -36,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingVertical: 10,
-    backgroundColor: "#ae445a",
+    backgroundColor: "#442e54",
     borderTopWidth: 1,
     borderColor: "#ddd",
     zIndex:30,
@@ -57,7 +71,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#442e54",
+    backgroundColor: "#ae445a",
     justifyContent: "center",
     alignItems: "center",
     elevation: 5,

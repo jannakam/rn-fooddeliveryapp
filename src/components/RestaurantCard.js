@@ -34,7 +34,7 @@ const RestaurantCard = ({ restaurant }) => {
           <Text style={styles.reviews}> ({randomReviews} reviews)</Text>
         </View>
         <View style={styles.row}>
-          <Feather name="clock" size={16} color="#ae445a" />
+          <Feather name="clock" size={14} color="#ae445a" />
           <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
         </View>
       </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   deliveryTime: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#ae445a',
   },
   category: {

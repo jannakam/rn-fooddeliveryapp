@@ -1,48 +1,58 @@
 import React from "react";
-import { View, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Image, SafeAreaView, Platform, StatusBar } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const Header = () => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.header}>
-      {/* Back Button */}
-      
-      <View style={styles.backButton}>
-      <TouchableOpacity style={styles.roundBorder}>
-        <Feather name="arrow-left" size={24} color="#442e54" />
-      </TouchableOpacity>
-      </View>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.header}>
+        {/* Back Button */}
+        <View style={styles.backButton}>
+          <TouchableOpacity 
+            style={styles.roundBorder}
+            onPress={() => navigation.goBack()}
+          >
+            <Feather name="arrow-left" size={24} color="#442e54" />
+          </TouchableOpacity>
+        </View>
 
-      {/* Logo */}
-      <View style={styles.logoContainer}>
-        <Image source={require("../../assets/logo.png")} style={styles.logo} />
-      </View>
+        {/* Logo */}
+        <View style={styles.logoContainer}>
+          <Image source={require("../../assets/logo2.png")} style={styles.logo} />
+        </View>
 
-      {/* Profile and Cart Icons */}
-      <View style={styles.rightIcons}>
-        {/* <TouchableOpacity style={styles.iconContainer}>
-          <Feather name="user" size={24} color="white" />
-        </TouchableOpacity> */}
-        <TouchableOpacity style={styles.iconContainer}>
-          <Feather name="shopping-cart" size={24} color="white" />
-        </TouchableOpacity>
+        {/* Cart Icon */}
+        <View style={styles.rightIcons}>
+          <TouchableOpacity 
+            style={styles.iconContainer}
+            onPress={() => navigation.navigate('Cart')}
+          >
+            <Feather name="shopping-cart" size={24} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default Header;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: "#442e54",
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+  },
   header: {
     height: 70, 
-    padding: 20,
-
     flexDirection: "row",
-    alignItems: "evenly",
+    alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#442e54",
     width: "100%",
+    
   },
   backButton: {
     alignItems: "center",
@@ -52,16 +62,14 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 5,
-    
+    flex: 4,
   },
   logo: {
-    width: 300, 
-    height: 120, 
+    width: "30%", 
+    height: "100%",
     resizeMode: "contain", 
   },
   rightIcons: {
-    // flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
@@ -73,5 +81,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+  },
+  iconContainer: {
+    padding: 8,
   }
 });

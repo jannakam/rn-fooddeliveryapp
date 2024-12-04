@@ -1,9 +1,19 @@
 import { StyleSheet, Text, View, TextInput, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../App';
 
 const Register = () => {
+  const navigation = useNavigation();
+
+  const { setIsAuthenticated } = useAuth();
+
+  const handleRegister = () => {
+    // Simulate login process
+    setIsAuthenticated(true); // Switch to HomeNavigation
+  };
   return (
-    <SafeAreaView style={styles.safeArea}>
+    // <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Sign Up!</Text>
@@ -16,12 +26,19 @@ const Register = () => {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} title="Register">
+          <TouchableOpacity onPress={() => handleRegister()} style={styles.button} title="Register">
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
         </View>
+
+        <View style={styles.loginContainer}>
+          <Text>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.replace('Login')}>
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+        </View>
       </View>
-    </SafeAreaView>
+    // </SafeAreaView>
   );
 };
 
@@ -37,6 +54,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
   },
   header: {
     marginBottom: 30,
@@ -81,6 +99,15 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: 'white',
+    fontWeight: 'bold',
+  },
+  loginContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  loginText: {
+    color: '#ae445a',
     fontWeight: 'bold',
   },
 });

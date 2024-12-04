@@ -12,8 +12,6 @@ import CategoryCard from "./CategoryCard";
 
 const Categories = () => {
   return (
-    <SafeAreaView>
-      <StatusBar style="auto" />
       <View style={styles.container}>
         {/* <Text style={styles.title}>Filter By Cuisine</Text> */}
 
@@ -29,7 +27,6 @@ const Categories = () => {
           </ScrollView>
         </View>
       </View>
-    </SafeAreaView>
   );
 };
 

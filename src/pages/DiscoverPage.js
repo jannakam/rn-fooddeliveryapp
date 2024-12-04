@@ -95,7 +95,7 @@ const DiscoverPage = () => {
             <MenuItemCard
               menuItem={{
                 ...item,
-                name: `${item.name} (${item.restaurant.name})`,
+                namewithRestaurant: `${item.name} (${item.restaurant.name})`,
               }}
             />
           </View>

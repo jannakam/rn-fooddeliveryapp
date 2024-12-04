@@ -4,21 +4,20 @@ import Restaurants from "../components/Restaurants";
 import Categories from "../components/Categories";
 import WavySeparator from "../components/WavySeparator.js";
 
-
 const Home = () => {
   return (
     <View style={styles.container}>
-        <View style={styles.categories}>
+      <View style={styles.categories}>
         <Categories />
-        </View>
-        
-        <View style={styles.separator}>
+      </View>
+
+      <View style={styles.separator}>
         <WavySeparator />
-        </View>
-        
-        <View style={styles.restaurants}>
+      </View>
+
+      <View style={styles.restaurants}>
         <Restaurants />
-        </View>
+      </View>
     </View>
   );
 };
@@ -26,17 +25,22 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    categories: {
-        backgroundColor: '#442e54',
-    },
-    separator: {
-        top: -30,
-    },
-    restaurants: {
-        padding: 10,
-        top: -50,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  categories: {
+    backgroundColor: "#442e54",
+  },
+  separator: {
+    top: -30,
+  },
+  restaurants: {
+    paddingHorizontal: 10,
+    marginTop: -50,
+    width: "100%",
+    flex:1
+  },
 });
