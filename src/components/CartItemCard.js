@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import myFood from '../data/myFood';
+import COLORS from '../constants/colors';
 
 const CartItemCard = ({ menuItem, updateQuantity }) => {
   return (
@@ -28,14 +29,14 @@ const CartItemCard = ({ menuItem, updateQuantity }) => {
             onPress={() => updateQuantity(menuItem.id, Math.max(0, menuItem.quantity - 1))}
             style={styles.button}
           >
-            <Icon name="minus" size={12} color="white" />
+            <Icon name="minus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
           <Text style={styles.quantity}>{menuItem.quantity}</Text>
           <TouchableOpacity
             onPress={() => updateQuantity(menuItem.id, menuItem.quantity + 1)}
             style={styles.button}
           >
-            <Icon name="plus" size={12} color="white" />
+            <Icon name="plus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
         </View>
       </View>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
     padding: 10,
   },
@@ -76,17 +77,17 @@ const styles = StyleSheet.create({
   itemName: {
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#442e54', // Matching MenuItemCard text color
+    color: COLORS.PRIMARY, 
     marginBottom: 5,
   },
   itemDescription: {
-    color: '#4b4376', // Matching MenuItemCard text color
+    color: COLORS.SECONDARY, 
     fontSize: 12,
   },
   price: {
     fontWeight: 'bold',
     fontSize: 14,
-    color: '#442e54', // Matching MenuItemCard text color
+    color: COLORS.PRIMARY, 
     marginTop: 5,
   },
   quantityModifier: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: '#ae445a', // Matching MenuItemCard button color
+    backgroundColor: COLORS.ACCENT, 
     alignItems: 'center',
     justifyContent: 'center',
   },

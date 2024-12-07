@@ -3,6 +3,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from "@expo/vector-icons";
 import { HomeStack, DiscoverStack, ProfileStack } from '../HomeNav/HomeNavigation';
+import COLORS from '../../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,14 +12,14 @@ const BottomNavigation = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: '#442e54',
+          backgroundColor: COLORS.PRIMARY,
           borderTopWidth: 1,
           borderColor: '#ddd',
           paddingVertical: 10,
           height: 90,
         },
         tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: '#rgba(255,255,255,0.6)',
+        tabBarInactiveTintColor: COLORS.MUTED,
         headerShown: false,
       }}
     >
@@ -68,12 +69,12 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#ae445a",
+    backgroundColor: COLORS.ACCENT,
     justifyContent: "center",
     alignItems: "center",
     marginTop: -40,
     elevation: 5,
-    shadowColor: "#000",
+    shadowColor: COLORS.SHADOW,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,

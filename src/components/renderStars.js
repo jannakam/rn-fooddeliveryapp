@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from "react-native-vector-icons/FontAwesome";
+import COLORS from '../constants/colors';
 
 // Function to render stars based on the rating
 const renderStars = (rating) => {
@@ -9,7 +10,7 @@ const renderStars = (rating) => {
         : i < Math.ceil(rating)
         ? 'star-half-full'
         : 'star-o';
-      return <Icon key={i} name={starType} size={16} color="goldenrod" style={styles.star} />;
+      return <Icon key={i} name={starType} size={16} color={COLORS.ACCENT} style={styles.star} />;
     });
   };
 

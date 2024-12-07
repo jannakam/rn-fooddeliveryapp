@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import renderStars from './renderStars';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import COLORS from '../constants/colors';
 
 const RestaurantCard = ({ restaurant }) => {
   const navigation = useNavigation();
@@ -39,7 +40,7 @@ const RestaurantCard = ({ restaurant }) => {
           <Text style={styles.reviews}> ({randomReviews} reviews)</Text>
         </View>
         <View style={styles.row}>
-          <Feather name="clock" size={14} color="#ae445a" />
+          <Feather name="clock" size={14} color={COLORS.PRIMARY} />
           <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
         </View>
       </View>
@@ -52,9 +53,9 @@ export default RestaurantCard;
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
-    shadowColor: 'grey',
+    shadowColor: COLORS.SHADOW,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     elevation: 2,
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     flex: 1,
-    color: "#4b4376"
+    color: COLORS.PRIMARY,
   },
   ratingBadge: {
     borderRadius: 5,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   rating: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontWeight: 'bold',
     fontSize: 12,
   },
@@ -105,16 +106,16 @@ const styles = StyleSheet.create({
   },
   reviews: {
     marginLeft: 5,
-    color: '#4b4376',
+    color: COLORS.SECONDARY,
     fontSize: 12,
   },
   deliveryTime: {
     fontSize: 12,
-    color: '#ae445a',
+    color: COLORS.PRIMARY,
   },
   category: {
     fontSize: 12,
-    color: '#4b4376',
+    color: COLORS.SECONDARY,
     marginVertical: 5,
   },
 });

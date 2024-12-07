@@ -9,13 +9,14 @@ import Cart from "../../pages/Cart";
 import Detail from "../../pages/Detail";
 import BottomNavigation from "../BottomNav/BottomNavigation";
 import Header from "../../components/Header";
+import COLORS from "../../constants/colors";
 
 const Stack = createNativeStackNavigator();
 
 const commonScreenOptions = {
   header: () => (
     <>
-      <StatusBar backgroundColor="#442e54" barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.PRIMARY} barStyle="light-content" />
       <Header />
     </>
   ),

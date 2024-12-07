@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState } from "react";
 import myFood from "../data/myFood";
 import { useNavigation } from "@react-navigation/native";
+import COLORS from "../constants/colors";
+import { useCart } from '../context/CartContext';
 
-const MenuItemCard = ({ menuItem, onAdd }) => {
+const MenuItemCard = ({ menuItem }) => {
   const navigation = useNavigation();
   const [quantity, setQuantity] = useState(0);
+  const { addToCart } = useCart();
 
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
@@ -18,8 +21,22 @@ const MenuItemCard = ({ menuItem, onAdd }) => {
 
   const handleAdd = () => {
     if (quantity > 0) {
-      onAdd(menuItem, quantity); // Trigger the add function with item and quantity
+      addToCart(menuItem, quantity);
       setQuantity(0); // Reset quantity after adding
+      Alert.alert(
+        'Added to Cart',
+        `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart`,
+        [
+          {
+            text: 'Continue Shopping',
+            style: 'cancel',
+          },
+          {
+            text: 'Go to Cart',
+            onPress: () => navigation.navigate('Cart'),
+          },
+        ]
+      );
     }
   };
 
@@ -52,16 +69,23 @@ const MenuItemCard = ({ menuItem, onAdd }) => {
           {/* Quantity Modifier */}
           <View style={styles.quantityModifier}>
             <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-              <Icon name="minus" size={16} color="white" />
+              <Icon name="minus" size={16} color={COLORS.WHITE} />
             </TouchableOpacity>
             <Text style={styles.quantity}>{quantity}</Text>
             <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-              <Icon name="plus" size={16} color="white" />
+              <Icon name="plus" size={16} color={COLORS.WHITE} />
             </TouchableOpacity>
           </View>
 
           {/* Add Button */}
-          <TouchableOpacity onPress={handleAdd} style={styles.addButton}>
+          <TouchableOpacity 
+            onPress={handleAdd} 
+            style={[
+              styles.addButton,
+              quantity === 0 && styles.addButtonDisabled
+            ]}
+            disabled={quantity === 0}
+          >
             <Text style={styles.addButtonText}>Add</Text>
           </TouchableOpacity>
         </View>
@@ -90,8 +114,8 @@ const styles = StyleSheet.create({
   },
   
   container: {
-    backgroundColor: "rgba(233,188,185,0.1)",
-    shadowColor: "grey",
+    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
+    shadowColor: COLORS.SHADOW,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     elevation: 2,
@@ -109,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   itemDescription: {
-    color: "#4b4376",
+    color: COLORS.PRIMARY,
     marginBottom: 5,
     textAlign: "center",
     fontSize: 12,
@@ -135,7 +159,7 @@ const styles = StyleSheet.create({
   button: {
     padding: 5,
     borderRadius: 15,
-    backgroundColor: "#4b4376",
+    backgroundColor: COLORS.SECONDARY,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -144,13 +168,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   addButton: {
-    backgroundColor: "#ae445a",
+    backgroundColor: COLORS.ACCENT,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderRadius: 15,
   },
+  addButtonDisabled: {
+    backgroundColor: COLORS.SECONDARY,
+    opacity: 0.5,
+  },
   addButtonText: {
-    color: "white",
+    color: COLORS.WHITE,
     fontWeight: "bold",
     fontSize: 14,
   },

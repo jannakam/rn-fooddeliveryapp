@@ -16,22 +16,27 @@ import DiscoverPage from "./src/pages/DiscoverPage";
 import AuthNavigation from "./src/navigation/AuthNav/AuthNavigation";
 import HomeNavigation from "./src/navigation/HomeNav/HomeNavigation";
 import { NavigationContainer } from "@react-navigation/native";
+import { CartProvider } from "./src/context/CartContext";
+import { CategoryProvider } from "./src/context/CategoryContext";
 
 const AuthContext = createContext();
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-      <NavigationContainer>
-        {isAuthenticated ? <HomeNavigation /> : <AuthNavigation />}
-      </NavigationContainer>
+      <CartProvider>
+        <CategoryProvider>
+          <NavigationContainer>
+            {isAuthenticated ? <HomeNavigation /> : <AuthNavigation />}
+          </NavigationContainer>
+        </CategoryProvider>
+      </CartProvider>
     </AuthContext.Provider>
-    
   );
 }
+
 const styles = StyleSheet.create({
   safeAreaTop: {
     backgroundColor: "#442e54",

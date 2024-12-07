@@ -11,6 +11,7 @@ import { StatusBar } from "expo-status-bar";
 import { MaterialIcons } from "@expo/vector-icons";
 import renderStars from "../components/renderStars";
 import { LinearGradient } from "expo-linear-gradient";
+import COLORS from "../constants/colors";
 
 const getTagStyle = (rating) => {
   if (rating > 4.5) return { label: "Excellent", color: "seagreen" };
@@ -116,15 +117,15 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay on the image
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay on the image 
   },
   cardContainer: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.BACKGROUND,
     marginTop: -30, // Pull the card up over the image
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    shadowColor: "#000",
+    shadowColor: COLORS.SHADOW,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 4,

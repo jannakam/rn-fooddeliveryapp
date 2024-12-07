@@ -3,6 +3,7 @@ import React from "react";
 import Restaurants from "../components/Restaurants";
 import Categories from "../components/Categories";
 import WavySeparator from "../components/WavySeparator.js";
+import COLORS from "../constants/colors";
 
 const Home = () => {
   return (
@@ -27,12 +28,12 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.BACKGROUND,
     justifyContent: "space-between",
     alignItems: "center",
   },
   categories: {
-    backgroundColor: "#442e54",
+    backgroundColor: COLORS.PRIMARY,
   },
   separator: {
     top: -30,

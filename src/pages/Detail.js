@@ -3,17 +3,20 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Dimensions,
   TouchableOpacity,
+  Image,
+  Animated,
+  Dimensions,
   KeyboardAvoidingView,
   Platform,
-  Animated,
+  Alert,
 } from 'react-native';
-import IngredientsList from '../components/IngredientsList';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { LinearGradient } from 'expo-linear-gradient';
 import myFood from '../data/myFood';
+import COLORS from '../constants/colors';
+import { useCart } from '../context/CartContext';
+import { useNavigation } from '@react-navigation/native';
+import IngredientsList from '../components/IngredientsList';
 
 const { width, height } = Dimensions.get('window');
 
@@ -21,6 +24,8 @@ const Detail = ({ route }) => {
   const { menuItem } = route.params;
   const [quantity, setQuantity] = useState(1);
   const [fadeAnim] = useState(new Animated.Value(0)); // Animation for image
+  const { addToCart } = useCart();
+  const navigation = useNavigation();
 
   // Trigger fade-in animation
   useEffect(() => {
@@ -40,8 +45,21 @@ const Detail = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    // Logic to add item to cart can be implemented here
-    console.log(`Added ${quantity} ${menuItem.name}(s) to the cart.`);
+    addToCart(menuItem, quantity);
+    Alert.alert(
+      'Success',
+      'Item added to cart!',
+      [
+        {
+          text: 'Continue Shopping',
+          style: 'cancel',
+        },
+        {
+          text: 'Go to Cart',
+          onPress: () => navigation.navigate('Cart'),
+        },
+      ]
+    );
   };
 
   return (
@@ -70,11 +88,11 @@ const Detail = ({ route }) => {
       {/* Quantity Modifier */}
       <View style={styles.quantityModifier}>
         <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-          <Icon name="minus" size={16} color="white" />
+          <Icon name="minus" size={16} color={COLORS.WHITE} />
         </TouchableOpacity>
         <Text style={styles.quantity}>{quantity}</Text>
         <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-          <Icon name="plus" size={16} color="white" />
+          <Icon name="plus" size={16} color={COLORS.WHITE} />
         </TouchableOpacity>
       </View>
 
@@ -85,7 +103,7 @@ const Detail = ({ route }) => {
 
       {/* Description */}
       <View style={styles.detailsContainer}>
-        <Text>
+        <Text style={styles.description}>
           {menuItem.description.length > 100
             ? `${menuItem.description.slice(0, 100)}...`
             : menuItem.description}
@@ -105,7 +123,7 @@ export default Detail;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.BACKGROUND,
     justifyContent: 'space-between',
   },
   semiCircle: {
@@ -114,7 +132,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '125%',
     height: height * 0.23,
-    backgroundColor: '#442e54',
+    backgroundColor: COLORS.PRIMARY,
     borderBottomLeftRadius: width,
     borderBottomRightRadius: width,
     zIndex: 1,
@@ -122,7 +140,6 @@ const styles = StyleSheet.create({
   imageContainer: {
     zIndex: 10,
     alignItems: 'center',
-    // marginTop: height * 0.01,
   },
   image: {
     width: width * 0.8,
@@ -137,7 +154,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 10,
     textAlign: 'center',
-    color: 'white',
+    color: COLORS.WHITE,
     zIndex: 10,
   },
   price: {
@@ -145,11 +162,13 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: 'center',
     zIndex: 10,
-    color: '#e9bcb9',
+    color: COLORS.LIGHT,
   },
-  ingredientsContainer: {
-    height: height * 0.1,
-    marginTop: -20,
+  description: {
+    fontSize: 16,
+    color: COLORS.SECONDARY,
+    textAlign: 'center',
+    lineHeight: 24,
   },
   quantityModifier: {
     flexDirection: 'row',
@@ -164,15 +183,15 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ae445a',
+    backgroundColor: COLORS.ACCENT,
   },
   quantity: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#4b4376',
+    color: COLORS.SECONDARY,
   },
   addToCartButton: {
-    backgroundColor: '#4b4376',
+    backgroundColor: COLORS.SECONDARY,
     paddingVertical: 15,
     marginHorizontal: 20,
     marginBottom: 40,
@@ -180,8 +199,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   addToCartText: {
-    color: 'white',
+    color: COLORS.WHITE,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  ingredientsContainer: {
+    height: height * 0.1,
+    marginTop: -20,
   },
 });

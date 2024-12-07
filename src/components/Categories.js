@@ -5,28 +5,36 @@ import {
   View,
   StatusBar,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import restaurantCategories from "../data/categories";
 import CategoryCard from "./CategoryCard";
+import COLORS from "../constants/colors";
 
-const Categories = () => {
+const Categories = ({ onSelectCategory, selectedCategory }) => {
   return (
-      <View style={styles.container}>
-        {/* <Text style={styles.title}>Filter By Cuisine</Text> */}
-
-        <View style={styles.categoryContainer}>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContainer}
-          >
-            {restaurantCategories.map((category, index) => (
-              <CategoryCard key={index} category={category} />
-            ))}
-          </ScrollView>
-        </View>
+    <View style={styles.container}>
+      <View style={styles.categoryContainer}>
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.scrollContainer}
+        >
+          {restaurantCategories.map((category, index) => (
+            <TouchableOpacity 
+              key={index} 
+              onPress={() => onSelectCategory(selectedCategory === category.categoryName ? null : category.categoryName)}
+            >
+              <CategoryCard 
+                category={category} 
+                isSelected={selectedCategory === category.categoryName}
+              />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </View>
+    </View>
   );
 };
 
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    color: 'white',
+    color: COLORS.WHITE,
   },
   categoryContainer: {
     flexDirection: "row",

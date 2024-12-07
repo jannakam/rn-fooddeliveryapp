@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons"; // Import icons
+import COLORS from "../constants/colors";
 
 const ProfilePage = () => {
   return (
@@ -14,21 +15,21 @@ const ProfilePage = () => {
           <Text style={styles.label}>Name:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>Janna Almuqaisib</Text>
-            <MaterialIcons name="edit" size={20} color="#ae445a" />
+            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
           </View>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Email:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>janna@gmail.com</Text>
-            <MaterialIcons name="edit" size={20} color="#ae445a" />
+            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
           </View>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Phone:</Text>
           <View style={styles.editable}>
             <Text style={styles.value}>+965 9449 9371</Text>
-            <MaterialIcons name="edit" size={20} color="#ae445a" />
+            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
           </View>
         </View>
       </View>
@@ -38,7 +39,7 @@ const ProfilePage = () => {
         <Text style={styles.sectionTitle}>Payment Methods</Text>
         <View style={styles.detailRow}>
           <Text style={styles.value}>Visa **** 1234</Text>
-          <MaterialIcons name="edit" size={20} color="#ae445a" />
+          <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
         </View>
       </View>
 
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 15,
     borderRadius: 8,
-    shadowColor: "#000",
+    shadowColor: COLORS.SHADOW,
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
@@ -87,12 +88,12 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    color: "#442e54", // Updated label color
+    color: COLORS.SECONDARY, 
     fontWeight: "500",
   },
   value: {
     fontSize: 16,
-    color: "#4b4376", // Updated value color
+    color: COLORS.SECONDARY,
   },
   editable: {
     flexDirection: "row",
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     paddingVertical: 12,
     paddingHorizontal: 20,
-    backgroundColor: "#4b4376", // Updated button color
+    backgroundColor: COLORS.SECONDARY,
     borderRadius: 5,
     alignItems: "center",
   },

@@ -11,6 +11,7 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import restaurants from "../data/restaurants";
 import MenuItemCard from "../components/MenuItemCard";
+import COLORS from "../constants/colors";
 
 const DiscoverPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -129,18 +130,18 @@ export default DiscoverPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: COLORS.BACKGROUND,
     padding: 20,
   },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginBottom: 15,
-    shadowColor: "#000",
+    shadowColor: COLORS.SHADOW,
     shadowOpacity: 0.1,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
@@ -149,14 +150,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     marginLeft: 10,
-    color: "#333",
+    color: COLORS.TEXT_PRIMARY,
   },
   keywordsContainer: {
     marginBottom: 20,
     height: 40,
   },
   keywordLabel: {
-    backgroundColor: "#4b4376",
+    backgroundColor: COLORS.ACCENT,
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 20,
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   keywordText: {
-    color: "#fff",
+    color: COLORS.WHITE,
     fontSize: 14,
     fontWeight: "bold",
     textTransform: "capitalize", // Ensures category names are capitalized
@@ -183,14 +184,15 @@ const styles = StyleSheet.create({
     margin: 5, // Add spacing between items
   },
   emptyStateContainer: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   noResults: {
     textAlign: "center",
-    color: "grey",
+    color: COLORS.SECONDARY,
     fontSize: 16,
+
   },
   row: {
     justifyContent: "space-between", // Ensure items are evenly distributed

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
 import CartItemCard from '../components/CartItemCard';
-import restaurants from '../data/restaurants';
 import Icon from 'react-native-vector-icons/Feather';
+import COLORS from '../constants/colors';
+import { useCart } from '../context/CartContext';
+import { useNavigation, CommonActions } from '@react-navigation/native';
+
 
 // Add this mock data at the top of the file
 const sampleAddresses = [
@@ -27,30 +30,54 @@ const sampleAddresses = [
 ];
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState(
-    [restaurants[0].menuItems[0], restaurants[2].menuItems[0]].map((item) => ({
-      ...item,
-      quantity: 1, // Initialize each item's quantity
-    }))
-  );
-  // Add new state for address selection
+  const { cartItems, updateQuantity, clearCart, getCartTotal } = useCart();
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isAddressDropdownOpen, setIsAddressDropdownOpen] = useState(false);
+  const navigation = useNavigation();
 
-  // Update quantity function
-  const updateQuantity = (id, newQuantity) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
+  const handleCheckout = () => {
+    if (cartItems.length === 0) {
+      Alert.alert('Cart Empty', 'Please add items to your cart before checking out.');
+      return;
+    }
+
+    if (!selectedAddress) {
+      Alert.alert('Address Required', 'Please select a delivery address.');
+      return;
+    }
+
+    Alert.alert(
+      'Confirm Order',
+      `Total amount: ${getCartTotal().toFixed(2)} KWD\nDeliver to: ${selectedAddress.name}`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => {
+            clearCart();
+            Alert.alert('Success', 'Your order has been placed successfully!', [
+              {
+                text: 'OK',
+                onPress: () => {
+                  // Reset navigation state and navigate to HomeTab
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [
+                        { name: 'HomeTab' }
+                      ],
+                    })
+                  );
+                }
+              }
+            ]);
+          },
+        },
+      ]
     );
-  };
-
-  // Calculate total price
-  const calculateTotal = () => {
-    return cartItems
-      .reduce((total, item) => total + item.price * item.quantity, 0)
-      .toFixed(2);
   };
 
   return (
@@ -96,29 +123,45 @@ const Cart = () => {
         )}
       </View>
 
-      <FlatList
-        data={cartItems}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
-        )}
-        contentContainerStyle={styles.listContent}
-      />
+      {cartItems.length === 0 ? (
+        <View style={styles.emptyCart}>
+          <Icon name="shopping-cart" size={50} color={COLORS.SECONDARY} />
+          <Text style={styles.emptyCartText}>Your cart is empty</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={cartItems}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
+          )}
+          contentContainerStyle={styles.listContent}
+        />
+      )}
+
       {/* Total Price Section */}
-      <View style={styles.checkoutContainer}>
-        <Text style={styles.totalLabel}>Total:</Text>
-        <Text style={styles.totalAmount}>{calculateTotal()} KWD</Text>
-      </View>
+      {cartItems.length > 0 && (
+        <View style={styles.checkoutContainer}>
+          <Text style={styles.totalLabel}>Total:</Text>
+          <Text style={styles.totalAmount}>{getCartTotal().toFixed(2)} KWD</Text>
+        </View>
+      )}
+
       {/* Checkout Button */}
       <TouchableOpacity 
         style={[
           styles.checkoutButton,
-          !selectedAddress && styles.checkoutButtonDisabled
+          (!selectedAddress || cartItems.length === 0) && styles.checkoutButtonDisabled
         ]}
-        disabled={!selectedAddress}
+        disabled={!selectedAddress || cartItems.length === 0}
+        onPress={handleCheckout}
       >
         <Text style={styles.checkoutButtonText}>
-          {selectedAddress ? 'Checkout' : 'Select an address to checkout'}
+          {cartItems.length === 0 
+            ? 'Add items to cart' 
+            : !selectedAddress 
+              ? 'Select an address to checkout'
+              : 'Checkout'}
         </Text>
       </TouchableOpacity>
     </View>
@@ -130,7 +173,7 @@ export default Cart;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: COLORS.BACKGROUND,
     paddingHorizontal: 20,
     paddingVertical: 30,
     width: "100%",
@@ -138,7 +181,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#442e54',
+    color: COLORS.PRIMARY,
     marginBottom: 20,
   },
   listContent: {
@@ -147,40 +190,35 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#442e54',
+    color: COLORS.PRIMARY,
   },
   totalAmount: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#442e54',
+    color: COLORS.PRIMARY,
   },
   checkoutContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
     padding: 15,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    // shadowColor: '#000',
-    // shadowOpacity: 0.1,
-    // shadowRadius: 4,
-    // shadowOffset: { width: 0, height: 2 },
+    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
   },
   checkoutButton: {
-    backgroundColor: '#4b4376',
+    backgroundColor: COLORS.SECONDARY,
     paddingVertical: 12,
     borderRadius: 5,
     alignItems: 'center',
     marginVertical: 15,
   },
   checkoutButtonText: {
-    color: '#fff',
+    color: COLORS.WHITE,
     fontSize: 16,
     fontWeight: '500',
   },
   addressSection: {
     marginBottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.BACKGROUND,
     borderRadius: 5,
     overflow: 'hidden',
   },
@@ -188,13 +226,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 15,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
     alignItems: 'center',
   },
   addressHeaderText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#442e54',
+    color: COLORS.PRIMARY,
   },
   dropdownIcon: {
     fontSize: 14,
@@ -225,5 +263,15 @@ const styles = StyleSheet.create({
   },
   checkoutButtonDisabled: {
     backgroundColor: '#9c9c9c',
+  },
+  emptyCart: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emptyCartText: {
+    fontSize: 18,
+    color: COLORS.SECONDARY,
+    marginTop: 10,
   },
 });
