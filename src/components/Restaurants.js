@@ -2,17 +2,40 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import RestaurantCard from "./RestaurantCard";
-import restaurants from "../data/restaurants";
 import COLORS from "../constants/colors";
 import { useCategory } from '../context/CategoryContext';
+import { useQuery } from "@tanstack/react-query";
+import { getAllRestaurants } from "../api/items";
 
 const Restaurants = () => {
   const { selectedCategory } = useCategory();
+  const { data: restaurants, isLoading, isError } = useQuery({
+    queryKey: ["restaurants"],
+    queryFn: getAllRestaurants,
+  });
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>Loading restaurants...</Text>
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>Error loading restaurants. Please try again.</Text>
+      </View>
+    );
+  }
+
+  // Filter restaurants based on selected category
   const filteredRestaurants = selectedCategory
-    ? restaurants.filter(restaurant => restaurant.category === selectedCategory)
+    ? restaurants.filter(restaurant => restaurant.category.name === selectedCategory)
     : restaurants;
 
-  const randomOpen = Math.floor(Math.random() * restaurants.length) + 1;
+  const openCount = filteredRestaurants?.length || 0;
 
   return (
     <View style={styles.container}>
@@ -22,13 +45,13 @@ const Restaurants = () => {
       >
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
-            {selectedCategory ? selectedCategory : 'All Restaurants'}
+            {selectedCategory || 'All Restaurants'}
           </Text>
-          <Text style={styles.open}>{randomOpen} are open</Text>
+          <Text style={styles.open}>{openCount} are open</Text>
         </View>
       </LinearGradient>
 
-      {filteredRestaurants.length === 0 ? (
+      {filteredRestaurants?.length === 0 ? (
         <View style={styles.noResultsContainer}>
           <Text style={styles.noResultsText}>No restaurants found</Text>
         </View>
@@ -38,8 +61,8 @@ const Restaurants = () => {
           showsVerticalScrollIndicator={false}
         >
           <View>
-            {filteredRestaurants.map((restaurant) => (
-              <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            {filteredRestaurants?.map((restaurant) => (
+              <RestaurantCard key={restaurant._id} restaurant={restaurant} />
             ))}
           </View>
         </ScrollView>
@@ -88,7 +111,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
   },
   noResultsContainer: {
-    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 100,
@@ -97,5 +119,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.SECONDARY,
     textAlign: 'center',
+  },
+  message: {
+    textAlign: 'center',
+    marginTop: 40,
+    color: COLORS.SECONDARY,
   },
 });

@@ -25,7 +25,7 @@ const RestaurantCard = ({ restaurant }) => {
       })
     ]).start(() => {
       navigation.navigate('MenuItem', { 
-        restaurant,
+        restaurantData: restaurant,
         fromCard: true
       });
     });
@@ -75,7 +75,7 @@ const RestaurantCard = ({ restaurant }) => {
             </View>
           </View>
           <Text style={styles.category}>
-            {restaurant.category}
+            {restaurant.category.name}
           </Text>
           <View style={styles.row}>
             {renderStars(restaurant.rating)}

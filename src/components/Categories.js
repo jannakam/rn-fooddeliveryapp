@@ -8,11 +8,34 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import restaurantCategories from "../data/categories";
+// import restaurantCategories from "../data/categories";
 import CategoryCard from "./CategoryCard";
 import COLORS from "../constants/colors";
+import { getAllCategories } from "../api/items";
+import { useQuery } from "@tanstack/react-query";
 
 const Categories = ({ onSelectCategory, selectedCategory }) => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: getAllCategories,
+  });
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>Loading categories...</Text>
+      </View>
+    );
+  }
+
+  if (isError) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.message}>Error loading categories. Please try again.</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.categoryContainer}>
@@ -21,14 +44,17 @@ const Categories = ({ onSelectCategory, selectedCategory }) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.scrollContainer}
         >
-          {restaurantCategories.map((category, index) => (
+          {data?.map((category, index) => (
             <TouchableOpacity 
-              key={index} 
-              onPress={() => onSelectCategory(selectedCategory === category.categoryName ? null : category.categoryName)}
+              key={category._id} 
+              onPress={() => onSelectCategory(selectedCategory === category.name ? null : category.name)}
             >
               <CategoryCard 
-                category={category} 
-                isSelected={selectedCategory === category.categoryName}
+                category={{
+                  categoryName: category.name,
+                  image: category.image
+                }}
+                isSelected={selectedCategory === category.name}
               />
             </TouchableOpacity>
           ))}
@@ -60,5 +86,10 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginTop: 40,
     gap: 10,
+  },
+  message: {
+    textAlign: 'center',
+    marginTop: 40,
+    color: COLORS.WHITE,
   },
 });

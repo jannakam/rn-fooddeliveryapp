@@ -18,13 +18,16 @@ import HomeNavigation from "./src/navigation/HomeNav/HomeNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { CartProvider } from "./src/context/CartContext";
 import { CategoryProvider } from "./src/context/CategoryContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const AuthContext = createContext();
 
 export default function App() {
+  const queryClient = new QueryClient();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   return (
+    <QueryClientProvider client={queryClient}>
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       <CartProvider>
         <CategoryProvider>
@@ -34,6 +37,7 @@ export default function App() {
         </CategoryProvider>
       </CartProvider>
     </AuthContext.Provider>
+    </QueryClientProvider>
   );
 }
 
