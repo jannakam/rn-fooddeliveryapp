@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     color: COLORS.PRIMARY,
   },
   button: {
-    backgroundColor: COLORS.ACCENT,
+    backgroundColor: COLORS.SECONDARY,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
