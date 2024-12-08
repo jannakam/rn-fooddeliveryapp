@@ -62,14 +62,9 @@ const Cart = () => {
       return;
     }
 
-    // Create a formatted string of cart items
-    const itemsList = cartItems
-      .map(item => `${item.quantity}x ${item.name}`)
-      .join('\n');
-
     Alert.alert(
       'Confirm Order',
-      `Please confirm your order:\n\n${itemsList}\n\nTotal amount: ${getCartTotal().toFixed(2)} KWD\nDeliver to: ${selectedAddress.name}`,
+      `Total amount: ${getCartTotal().toFixed(2)} KWD\nDeliver to: ${selectedAddress.name}`,
       [
         {
           text: 'Cancel',
@@ -79,26 +74,14 @@ const Cart = () => {
           text: 'Confirm',
           style: 'default',
           onPress: () => {
+            const orderDetails = {
+              orderNumber: Math.floor(100000 + Math.random() * 900000), // Generate random 6-digit number
+              total: getCartTotal(),
+              address: `${selectedAddress.street}, ${selectedAddress.area}, ${selectedAddress.block}, ${selectedAddress.building}`,
+              items: cartItems
+            };
             clearCart();
-            Alert.alert(
-              'Order Placed!',
-              'Your order has been placed successfully and will be delivered soon.',
-              [{
-                text: 'OK',
-                style: 'default',
-                onPress: () => {
-                  navigation.dispatch(
-                    CommonActions.reset({
-                      index: 0,
-                      routes: [
-                        { name: 'HomeTab' }
-                      ],
-                    })
-                  );
-                }
-              }],
-              { cancelable: false }
-            );
+            navigation.navigate('OrderConfirmation', { orderDetails });
           },
         },
       ],

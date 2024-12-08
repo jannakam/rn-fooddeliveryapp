@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   ScrollView,
+  Animated,
+  Dimensions,
 } from "react-native";
 import MenuItemCard from "../components/MenuItemCard";
 import { StatusBar } from "expo-status-bar";
@@ -21,8 +23,27 @@ const getTagStyle = (rating) => {
   return { label: "Poor", color: "darkred" };
 };
 
-const MenuItems = ({ route }) => {
+const MenuItems = ({ route, navigation }) => {
   const { restaurant } = route.params;
+  const { height } = Dimensions.get('window');
+  const slideAnim = useRef(new Animated.Value(height)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    // Run animations when component mounts
+    Animated.parallel([
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 600, // Increased from 300 to 600
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 800, // Increased from 400 to 800
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
 
   if (!restaurant) {
     return (
@@ -40,14 +61,29 @@ const MenuItems = ({ route }) => {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      {/* Image Section with Overlay */}
+      {/* Fixed Background Section */}
       <View style={styles.imageContainer}>
-        <Image source={{ uri: restaurant.image }} style={styles.image} />
+        <Image 
+          source={{ uri: restaurant.image }} 
+          style={styles.image}
+          resizeMode="cover"
+        />
         <View style={styles.imageOverlay} />
       </View>
 
-      {/* Card-like Content Section */}
-      <View style={styles.cardContainer}>
+      {/* Animated Card Content */}
+      <Animated.View 
+        style={[
+          styles.cardContainer,
+          {
+            transform: [{ translateY: slideAnim }],
+            opacity: fadeAnim.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0.8, 1], // Start with slight opacity
+            }),
+          }
+        ]}
+      >
         {/* Header Content */}
         <View style={styles.header}>
           <Text style={styles.title}>{restaurant.name}</Text>
@@ -89,7 +125,7 @@ const MenuItems = ({ route }) => {
             style={styles.bottomGradient}
           />
         </View>
-      </View>
+      </Animated.View>
     </View>
   );
 };
@@ -107,9 +143,9 @@ const styles = StyleSheet.create({
     height: 200,
   },
   image: {
-    width: 430,
-    height: "80%",
-    resizeMode: "contain",
+    width: "100%",
+    height: "100%",
+    backgroundColor: COLORS.PRIMARY,
   },
   imageOverlay: {
     position: "absolute",
@@ -117,11 +153,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Dark overlay on the image 
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Restored to original 0.5 opacity
   },
   cardContainer: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
+    marginTop: -30,
+    borderTopLeftRadius: 30,
     marginTop: -30, // Pull the card up over the image
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -184,7 +222,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 50, // Adjust the height of the gradient
+    height: 50, 
   },
   errorContainer: {
     flex: 1,

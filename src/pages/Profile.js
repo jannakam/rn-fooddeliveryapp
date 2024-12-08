@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
-import UserAvatar from 'react-native-user-avatar';
 
 const ProfilePage = () => {
   const navigation = useNavigation();
@@ -34,14 +33,6 @@ const ProfilePage = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Profile Avatar */}
-      <View style={styles.avatarContainer}>
-      <UserAvatar size={100} name="John Doe" bgColors={[COLORS.PRIMARY]}/>
-        <TouchableOpacity style={styles.editAvatarButton}>
-          <MaterialIcons name="edit" size={20} color={COLORS.WHITE} />
-        </TouchableOpacity>
-      </View>
-
       <Text style={styles.title}>My Profile</Text>
 
       {/* User Information */}
@@ -142,30 +133,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 30,
     backgroundColor: COLORS.BACKGROUND,
-  },
-  avatarContainer: {
-    alignItems: 'center',
-    marginBottom: 20,
-    position: 'relative',
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
-  },
-  editAvatarButton: {
-    position: 'absolute',
-    bottom: 0,
-    right: '35%',
-    backgroundColor: COLORS.ACCENT,
-    borderRadius: 15,
-    width: 30,
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: COLORS.WHITE,
   },
   title: {
     fontSize: 28,

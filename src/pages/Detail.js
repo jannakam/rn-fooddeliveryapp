@@ -47,7 +47,7 @@ const Detail = ({ route }) => {
   const handleAddToCart = () => {
     Alert.alert(
       'Confirm Add to Cart',
-      `Would you like to add ${quantity}x ${menuItem.name} to your cart?`,
+      `Would you like to add ${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} to your cart?`,
       [
         {
           text: 'Cancel',
@@ -55,12 +55,11 @@ const Detail = ({ route }) => {
         },
         {
           text: 'Add to Cart',
-          style: 'default',
           onPress: () => {
             addToCart(menuItem, quantity);
             Alert.alert(
               'Success',
-              `${quantity}x ${menuItem.name} added to cart!`,
+              `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart!`,
               [
                 {
                   text: 'Continue Shopping',

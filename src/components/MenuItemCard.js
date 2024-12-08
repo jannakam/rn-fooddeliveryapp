@@ -21,19 +21,34 @@ const MenuItemCard = ({ menuItem }) => {
 
   const handleAdd = () => {
     if (quantity > 0) {
-      addToCart(menuItem, quantity);
-      setQuantity(0); // Reset quantity after adding
       Alert.alert(
-        'Added to Cart',
-        `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart`,
+        'Confirm Add to Cart',
+        `Would you like to add ${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} to your cart?`,
         [
           {
-            text: 'Continue Shopping',
+            text: 'Cancel',
             style: 'cancel',
           },
           {
-            text: 'Go to Cart',
-            onPress: () => navigation.navigate('Cart'),
+            text: 'Add to Cart',
+            onPress: () => {
+              addToCart(menuItem, quantity);
+              setQuantity(0); // Reset quantity after adding
+              Alert.alert(
+                'Added to Cart',
+                `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart`,
+                [
+                  {
+                    text: 'Continue Shopping',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Go to Cart',
+                    onPress: () => navigation.navigate('Cart'),
+                  },
+                ]
+              );
+            },
           },
         ]
       );
@@ -64,16 +79,16 @@ const MenuItemCard = ({ menuItem }) => {
 
         <Text style={styles.price}>{menuItem.price} KWD</Text>
 
-        {/* Actions Container */}
-        <View style={styles.actionsContainer}>
+        {/* Quantity Modifier and Add Button in Column */}
+        <View style={styles.actionsColumn}>
           {/* Quantity Modifier */}
           <View style={styles.quantityModifier}>
             <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-              <Icon name="minus" size={16} color={COLORS.WHITE} />
+              <Icon name="minus" size={14} color={COLORS.WHITE} />
             </TouchableOpacity>
             <Text style={styles.quantity}>{quantity}</Text>
             <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-              <Icon name="plus" size={16} color={COLORS.WHITE} />
+              <Icon name="plus" size={14} color={COLORS.WHITE} />
             </TouchableOpacity>
           </View>
 
@@ -98,20 +113,21 @@ export default MenuItemCard;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 25,
+    marginVertical: 25, // Space between cards
   },
   imageContainer: {
     position: "absolute",
-    top: -60,
+    top: -60, // Position the image above the card
     left: "50%",
-    transform: [{ translateX: -90 }],
-    zIndex: 1,
+    transform: [{ translateX: -90 }], // Center the image horizontally
+    zIndex: 1, // Place the image above the card
   },
   image: {
-    width: 180,
+    width: 180, // Larger size
     height: 180,
-    borderRadius: 100,
+    borderRadius: 100, // Half of the new dimensions
   },
+  
   container: {
     backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
     shadowColor: COLORS.SHADOW,
@@ -120,7 +136,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 10,
     padding: 15,
-    marginTop: 30,
+    marginTop: 30, // Push content down to avoid overlapping with the image
     height: 310,
     justifyContent: "space-between",
     alignItems: "center",
@@ -140,12 +156,12 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: "bold",
     fontSize: 14,
-    color: COLORS.SECONDARY,
+    color: "#442e54",
     textAlign: "center",
   },
-  actionsContainer: {
+  actionsColumn: {
     alignItems: "center",
-    gap: 15,
+    gap: 10,
     marginTop: 10,
     width: "100%",
   },
@@ -153,7 +169,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
+    gap: 5,
   },
   button: {
     padding: 5,
@@ -161,8 +177,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.SECONDARY,
     alignItems: "center",
     justifyContent: "center",
-    width: 30,
-    height: 30,
+    width: 24,
+    height: 24,
   },
   quantity: {
     fontSize: 14,
@@ -172,10 +188,10 @@ const styles = StyleSheet.create({
   },
   addButton: {
     backgroundColor: COLORS.ACCENT,
-    paddingVertical: 8,
-    paddingHorizontal: 40,
+    paddingVertical: 5,
+    paddingHorizontal: 25,
     borderRadius: 10,
-    alignSelf: "center",
+    alignItems: "center",
   },
   addButtonDisabled: {
     backgroundColor: COLORS.SECONDARY,

@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
     // elevation: 2,
     // borderRadius: 10,
     alignItems: 'center',
+    padding: 10,
   },
   image: {
     width: 150,
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
-    padding: 10,
+    // paddingHorizontal: 10,
   },
   details: {
     flex: 1,
@@ -87,7 +88,7 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: 'bold',
     fontSize: 14,
-    color: COLORS.PRIMARY, 
+    color: COLORS.SECONDARY, 
     marginTop: 5,
   },
   quantityModifier: {
