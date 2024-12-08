@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
@@ -6,6 +6,16 @@ import { useNavigation } from "@react-navigation/native";
 
 const ProfilePage = () => {
   const navigation = useNavigation();
+  const userName = "Janna Almuqaisib";
+
+  const userInitials = useMemo(() => {
+    return userName
+      .split(' ')
+      .map(name => name[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  }, [userName]);
 
   const addresses = [
     {
@@ -37,27 +47,33 @@ const ProfilePage = () => {
 
       {/* User Information */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>User Details</Text>
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>{userInitials}</Text>
+            <TouchableOpacity style={styles.editAvatarButton}>
+              <MaterialIcons name="edit" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.userName}>{userName}</Text>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>User Details</Text>
+          <TouchableOpacity style={styles.editButton}>
+            <Text style={styles.editButtonText}>Edit</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Name:</Text>
-          <View style={styles.editable}>
-            <Text style={styles.value}>Janna Almuqaisib</Text>
-            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
-          </View>
+          <Text style={styles.value}>Janna Almuqaisib</Text>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Email:</Text>
-          <View style={styles.editable}>
-            <Text style={styles.value}>janna@gmail.com</Text>
-            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
-          </View>
+          <Text style={styles.value}>janna@gmail.com</Text>
         </View>
         <View style={styles.detailRow}>
           <Text style={styles.label}>Phone:</Text>
-          <View style={styles.editable}>
-            <Text style={styles.value}>+965 9449 9371</Text>
-            <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
-          </View>
+          <Text style={styles.value}>+965 9449 9371</Text>
         </View>
       </View>
 
@@ -65,18 +81,18 @@ const ProfilePage = () => {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Delivery Addresses</Text>
-          <TouchableOpacity>
-            <MaterialIcons name="add" size={24} color={COLORS.ACCENT} />
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity style={styles.addButton}>
+              <Text style={styles.editButtonText}>Add</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.editButton}>
+              <Text style={styles.editButtonText}>Edit</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         {addresses.map((address) => (
           <View key={address.id} style={styles.addressCard}>
-            <View style={styles.addressHeader}>
-              <Text style={styles.addressName}>{address.name}</Text>
-              <TouchableOpacity>
-                <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.addressName}>{address.name}</Text>
             <Text style={styles.addressText}>{address.street}</Text>
             <Text style={styles.addressText}>{address.area}, {address.block}</Text>
             <Text style={styles.addressText}>{address.building}</Text>
@@ -88,9 +104,12 @@ const ProfilePage = () => {
       <View style={styles.section}>
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Payment Methods</Text>
-          <TouchableOpacity>
-            <MaterialIcons name="add" size={24} color={COLORS.ACCENT} />
-          </TouchableOpacity>
+          <View style={styles.headerButtons}>
+            <TouchableOpacity style={styles.editButton}>
+              <Text style={styles.editButtonText}>Edit</Text>
+            </TouchableOpacity>
+            
+          </View>
         </View>
         {paymentMethods.map((method) => (
           <View key={method.id} style={styles.paymentCard}>
@@ -102,9 +121,6 @@ const ProfilePage = () => {
               />
               <Text style={styles.value}>{method.type} **** {method.last4}</Text>
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
-            </TouchableOpacity>
           </View>
         ))}
       </View>
@@ -135,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND,
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 20,
     color: COLORS.PRIMARY,
@@ -143,8 +159,8 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 20,
     backgroundColor: "white",
-    padding: 15,
-    borderRadius: 8,
+    padding: 25,
+    borderRadius: 10,
     shadowColor: COLORS.SHADOW,
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -155,6 +171,28 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 15,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  editButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 5,
+    backgroundColor: COLORS.BACKGROUND,
+  },
+  addButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 5,
+    backgroundColor: COLORS.BACKGROUND,
+  },
+  editButtonText: {
+    color: COLORS.ACCENT,
+    fontSize: 14,
+    fontWeight: '500',
   },
   sectionTitle: {
     fontSize: 18,
@@ -177,22 +215,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.SECONDARY,
   },
-  editable: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
   addressCard: {
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
     paddingVertical: 10,
     marginBottom: 10,
-  },
-  addressHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 5,
   },
   addressName: {
     fontSize: 16,
@@ -236,8 +263,47 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.SECONDARY,
     marginTop: 5,
+    marginBottom: 50,
   },
   logoutText: {
     color: COLORS.SECONDARY,
+  },
+  avatarContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: COLORS.SECONDARY,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    marginTop: 10,
+  },
+  avatarText: {
+    color: 'white',
+    fontSize: 36,
+    fontWeight: 'bold',
+  },
+  editAvatarButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: COLORS.ACCENT,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  userName: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: COLORS.PRIMARY,
+    marginVertical: 10,
   },
 });

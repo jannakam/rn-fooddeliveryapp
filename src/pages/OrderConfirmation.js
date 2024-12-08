@@ -53,7 +53,7 @@ const OrderConfirmation = ({ route }) => {
     ]).start(() => {
       navigation.reset({
         index: 0,
-        routes: [{ name: 'HomeScreen' }],
+        routes: [{ name: 'HomeTab' }],
       });
     });
   };

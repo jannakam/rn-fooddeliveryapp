@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: 'bold',
     color: COLORS.PRIMARY,
     marginBottom: 20,

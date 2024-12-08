@@ -28,16 +28,16 @@ export const HomeStack = () => {
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="HomeScreen" component={Home} />
       <Stack.Screen 
-  name="MenuItem" 
-  component={MenuItems}
-  options={{
-    cardStyleInterpolator: ({ current: { progress } }) => ({
-      cardStyle: {
-        opacity: progress
-      }
-    })
-  }}
-/>
+        name="MenuItem" 
+        component={MenuItems}
+        options={{
+          cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+              opacity: progress
+            }
+          })
+        }}
+      />
       <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
@@ -50,16 +50,16 @@ export const DiscoverStack = () => {
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="DiscoverScreen" component={DiscoverPage} />
       <Stack.Screen 
-  name="MenuItem" 
-  component={MenuItems}
-  options={{
-    cardStyleInterpolator: ({ current: { progress } }) => ({
-      cardStyle: {
-        opacity: progress
-      }
-    })
-  }}
-/>
+        name="MenuItem" 
+        component={MenuItems}
+        options={{
+          cardStyleInterpolator: ({ current: { progress } }) => ({
+            cardStyle: {
+              opacity: progress
+            }
+          })
+        }}
+      />
       <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
