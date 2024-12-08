@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
   },
   open: {

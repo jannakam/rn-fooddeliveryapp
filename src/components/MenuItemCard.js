@@ -64,8 +64,8 @@ const MenuItemCard = ({ menuItem }) => {
 
         <Text style={styles.price}>{menuItem.price} KWD</Text>
 
-        {/* Quantity Modifier and Add Button Row */}
-        <View style={styles.actionsRow}>
+        {/* Actions Container */}
+        <View style={styles.actionsContainer}>
           {/* Quantity Modifier */}
           <View style={styles.quantityModifier}>
             <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
@@ -98,21 +98,20 @@ export default MenuItemCard;
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginVertical: 25, // Space between cards
+    marginVertical: 25,
   },
   imageContainer: {
     position: "absolute",
-    top: -60, // Position the image above the card
+    top: -60,
     left: "50%",
-    transform: [{ translateX: -90 }], // Center the image horizontally
-    zIndex: 1, // Place the image above the card
+    transform: [{ translateX: -90 }],
+    zIndex: 1,
   },
   image: {
-    width: 180, // Larger size
+    width: 180,
     height: 180,
-    borderRadius: 100, // Half of the new dimensions
+    borderRadius: 100,
   },
-  
   container: {
     backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
     shadowColor: COLORS.SHADOW,
@@ -121,7 +120,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 10,
     padding: 15,
-    marginTop: 30, // Push content down to avoid overlapping with the image
+    marginTop: 30,
     height: 310,
     justifyContent: "space-between",
     alignItems: "center",
@@ -141,19 +140,19 @@ const styles = StyleSheet.create({
   price: {
     fontWeight: "bold",
     fontSize: 14,
-    color: "#442e54",
+    color: COLORS.SECONDARY,
     textAlign: "center",
   },
-  actionsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  actionsContainer: {
     alignItems: "center",
-    marginTop: 10, // Add spacing above the row
+    gap: 15,
+    marginTop: 10,
     width: "100%",
   },
   quantityModifier: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: 10,
   },
   button: {
@@ -162,16 +161,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.SECONDARY,
     alignItems: "center",
     justifyContent: "center",
+    width: 30,
+    height: 30,
   },
   quantity: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
+    minWidth: 20,
+    textAlign: "center",
   },
   addButton: {
     backgroundColor: COLORS.ACCENT,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
-    borderRadius: 15,
+    paddingVertical: 8,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    alignSelf: "center",
   },
   addButtonDisabled: {
     backgroundColor: COLORS.SECONDARY,

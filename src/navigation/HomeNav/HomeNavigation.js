@@ -10,7 +10,7 @@ import Detail from "../../pages/Detail";
 import BottomNavigation from "../BottomNav/BottomNavigation";
 import Header from "../../components/Header";
 import COLORS from "../../constants/colors";
-
+import OrderHistory from "../../pages/OrderHistory";
 const Stack = createNativeStackNavigator();
 
 const commonScreenOptions = {
@@ -49,6 +49,7 @@ export const ProfileStack = () => {
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="ProfileScreen" component={Profile} />
       <Stack.Screen name="Cart" component={Cart} />
+      <Stack.Screen name="OrderHistory" component={OrderHistory} />
     </Stack.Navigator>
   );
 };

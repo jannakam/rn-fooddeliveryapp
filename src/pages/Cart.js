@@ -37,18 +37,39 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (cartItems.length === 0) {
-      Alert.alert('Cart Empty', 'Please add items to your cart before checking out.');
+      Alert.alert(
+        'Cart Empty',
+        'Please add items to your cart before checking out.',
+        [{
+          text: 'OK',
+          style: 'default'
+        }],
+        { cancelable: true }
+      );
       return;
     }
 
     if (!selectedAddress) {
-      Alert.alert('Address Required', 'Please select a delivery address.');
+      Alert.alert(
+        'Address Required',
+        'Please select a delivery address.',
+        [{
+          text: 'OK',
+          style: 'default'
+        }],
+        { cancelable: true }
+      );
       return;
     }
 
+    // Create a formatted string of cart items
+    const itemsList = cartItems
+      .map(item => `${item.quantity}x ${item.name}`)
+      .join('\n');
+
     Alert.alert(
       'Confirm Order',
-      `Total amount: ${getCartTotal().toFixed(2)} KWD\nDeliver to: ${selectedAddress.name}`,
+      `Please confirm your order:\n\n${itemsList}\n\nTotal amount: ${getCartTotal().toFixed(2)} KWD\nDeliver to: ${selectedAddress.name}`,
       [
         {
           text: 'Cancel',
@@ -56,13 +77,16 @@ const Cart = () => {
         },
         {
           text: 'Confirm',
+          style: 'default',
           onPress: () => {
             clearCart();
-            Alert.alert('Success', 'Your order has been placed successfully!', [
-              {
+            Alert.alert(
+              'Order Placed!',
+              'Your order has been placed successfully and will be delivered soon.',
+              [{
                 text: 'OK',
+                style: 'default',
                 onPress: () => {
-                  // Reset navigation state and navigate to HomeTab
                   navigation.dispatch(
                     CommonActions.reset({
                       index: 0,
@@ -72,11 +96,13 @@ const Cart = () => {
                     })
                   );
                 }
-              }
-            ]);
+              }],
+              { cancelable: false }
+            );
           },
         },
-      ]
+      ],
+      { cancelable: true }
     );
   };
 

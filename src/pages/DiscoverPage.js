@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,15 +16,32 @@ import COLORS from "../constants/colors";
 const DiscoverPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
+  const [activeKeyword, setActiveKeyword] = useState("All");
 
-  // Extract unique categories from the restaurants data
-  const uniqueCategories = [
-    ...new Set(restaurants.map((restaurant) => restaurant.category)),
-  ];
+  // Extract unique categories and add 'All' at the beginning
+  const uniqueCategories = ["All", ...new Set(restaurants.map((restaurant) => restaurant.category))];
+
+  // Initialize with all items
+  useEffect(() => {
+    handleSearch("All");
+  }, []);
 
   // Perform search
   const handleSearch = (query) => {
     setSearchQuery(query);
+    setActiveKeyword(query);
+
+    if (query === "All") {
+      // Show all menu items when 'All' is selected
+      const allResults = [];
+      restaurants.forEach((restaurant) => {
+        restaurant.menuItems.forEach((item) => {
+          allResults.push({ ...item, restaurant });
+        });
+      });
+      setFilteredResults(allResults);
+      return;
+    }
 
     // Filter restaurants and menu items by category or menu item name
     const results = [];
@@ -56,10 +73,20 @@ const DiscoverPage = () => {
     return uniqueCategories.map((category, index) => (
       <TouchableOpacity
         key={index}
-        style={styles.keywordLabel}
+        style={[
+          styles.keywordLabel,
+          activeKeyword === category ? styles.activeKeyword : styles.inactiveKeyword
+        ]}
         onPress={() => handleSearch(category)}
       >
-        <Text style={styles.keywordText}>{category}</Text>
+        <Text 
+          style={[
+            styles.keywordText,
+            activeKeyword === category ? styles.activeKeywordText : styles.inactiveKeywordText
+          ]}
+        >
+          {category}
+        </Text>
       </TouchableOpacity>
     ));
   };
@@ -157,7 +184,6 @@ const styles = StyleSheet.create({
     height: 40,
   },
   keywordLabel: {
-    backgroundColor: COLORS.ACCENT,
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 20,
@@ -166,11 +192,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  activeKeyword: {
+    backgroundColor: COLORS.ACCENT,
+  },
+  inactiveKeyword: {
+    backgroundColor: COLORS.BLACK + '60',
+    // borderWidth: 1,
+    // borderColor: COLORS.SECONDARY + '60',
+    // shadowColor: COLORS.MUTED,
+    // shadowOpacity: 0.2,
+    // shadowRadius: 2,
+    // shadowOffset: { width: 0, height: 1 },
+  },
   keywordText: {
-    color: COLORS.WHITE,
     fontSize: 14,
     fontWeight: "bold",
-    textTransform: "capitalize", // Ensures category names are capitalized
+    textTransform: "capitalize",
+  },
+  activeKeywordText: {
+    color: COLORS.WHITE,
+  },
+  inactiveKeywordText: {
+    color: COLORS.SECONDARY + '80', // 80 is for opacity
   },
   resultsContainer: {
     paddingHorizontal: 5,
@@ -180,8 +223,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   gridItem: {
-    flex: 0.5, // Ensure proper spacing for all columns
-    margin: 5, // Add spacing between items
+    flex: 0.5, 
+    margin: 5,
   },
   emptyStateContainer: {
     // flex: 1,

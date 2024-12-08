@@ -45,20 +45,39 @@ const Detail = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    addToCart(menuItem, quantity);
     Alert.alert(
-      'Success',
-      'Item added to cart!',
+      'Confirm Add to Cart',
+      `Would you like to add ${quantity}x ${menuItem.name} to your cart?`,
       [
         {
-          text: 'Continue Shopping',
+          text: 'Cancel',
           style: 'cancel',
         },
         {
-          text: 'Go to Cart',
-          onPress: () => navigation.navigate('Cart'),
+          text: 'Add to Cart',
+          style: 'default',
+          onPress: () => {
+            addToCart(menuItem, quantity);
+            Alert.alert(
+              'Success',
+              `${quantity}x ${menuItem.name} added to cart!`,
+              [
+                {
+                  text: 'Continue Shopping',
+                  style: 'cancel',
+                },
+                {
+                  text: 'Go to Cart',
+                  style: 'default',
+                  onPress: () => navigation.navigate('Cart'),
+                },
+              ],
+              { cancelable: true }
+            );
+          },
         },
-      ]
+      ],
+      { cancelable: true }
     );
   };
 

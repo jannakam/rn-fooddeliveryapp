@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
 import ingredients from '../data/ingredients'
 import Ingredient from './Ingredient'
+import COLORS from '../constants/colors'
 
 
 const IngredientsList = () => {
@@ -34,7 +35,7 @@ const IngredientsList = () => {
       fontSize: 20,
       fontWeight: 'bold',
       marginBottom: 5,
-      color: '#4b4376'
+      color: COLORS.PRIMARY,
     },
     scrollContainer: {
       flexDirection: 'row',

@@ -1,11 +1,47 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { MaterialIcons } from "@expo/vector-icons"; // Import icons
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
+import { useNavigation } from "@react-navigation/native";
+import UserAvatar from 'react-native-user-avatar';
 
 const ProfilePage = () => {
+  const navigation = useNavigation();
+
+  const addresses = [
+    {
+      id: 1,
+      name: 'Home',
+      street: '123 Al Salem Street',
+      area: 'Salmiya',
+      block: 'Block 12',
+      building: 'Building 45',
+    },
+    {
+      id: 2,
+      name: 'Work',
+      street: '456 Kuwait City Avenue',
+      area: 'Sharq',
+      block: 'Block 3',
+      building: 'Tower 789',
+    }
+  ];
+
+  const paymentMethods = [
+    { id: 1, type: 'Visa', last4: '4242' },
+    { id: 2, type: 'Mastercard', last4: '8888' }
+  ];
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
+      {/* Profile Avatar */}
+      <View style={styles.avatarContainer}>
+      <UserAvatar size={100} name="John Doe" bgColors={[COLORS.PRIMARY]}/>
+        <TouchableOpacity style={styles.editAvatarButton}>
+          <MaterialIcons name="edit" size={20} color={COLORS.WHITE} />
+        </TouchableOpacity>
+      </View>
+
       <Text style={styles.title}>My Profile</Text>
 
       {/* User Information */}
@@ -34,20 +70,67 @@ const ProfilePage = () => {
         </View>
       </View>
 
-      {/* Payment Methods */}
+      {/* Addresses */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Payment Methods</Text>
-        <View style={styles.detailRow}>
-          <Text style={styles.value}>Visa **** 1234</Text>
-          <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Delivery Addresses</Text>
+          <TouchableOpacity>
+            <MaterialIcons name="add" size={24} color={COLORS.ACCENT} />
+          </TouchableOpacity>
         </View>
+        {addresses.map((address) => (
+          <View key={address.id} style={styles.addressCard}>
+            <View style={styles.addressHeader}>
+              <Text style={styles.addressName}>{address.name}</Text>
+              <TouchableOpacity>
+                <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.addressText}>{address.street}</Text>
+            <Text style={styles.addressText}>{address.area}, {address.block}</Text>
+            <Text style={styles.addressText}>{address.building}</Text>
+          </View>
+        ))}
       </View>
 
-      {/* Order History */}
-      <TouchableOpacity style={styles.button}>
+      {/* Payment Methods */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Payment Methods</Text>
+          <TouchableOpacity>
+            <MaterialIcons name="add" size={24} color={COLORS.ACCENT} />
+          </TouchableOpacity>
+        </View>
+        {paymentMethods.map((method) => (
+          <View key={method.id} style={styles.paymentCard}>
+            <View style={styles.paymentInfo}>
+              <MaterialIcons 
+                name={method.type.toLowerCase() === 'visa' ? 'credit-card' : 'credit-card'} 
+                size={24} 
+                color={COLORS.SECONDARY} 
+              />
+              <Text style={styles.value}>{method.type} **** {method.last4}</Text>
+            </View>
+            <TouchableOpacity>
+              <MaterialIcons name="edit" size={20} color={COLORS.ACCENT} />
+            </TouchableOpacity>
+          </View>
+        ))}
+      </View>
+
+      {/* Order History Button */}
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={() => navigation.navigate('OrderHistory')}
+      >
         <Text style={styles.buttonText}>View Order History</Text>
       </TouchableOpacity>
-    </View>
+
+      {/* Logout Button */}
+      <TouchableOpacity style={[styles.button, styles.logoutButton]}>
+        <Text style={[styles.buttonText, styles.logoutText]}>Logout</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -58,12 +141,37 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 30,
-    width: "100%",
+    backgroundColor: COLORS.BACKGROUND,
+  },
+  avatarContainer: {
+    alignItems: 'center',
+    marginBottom: 20,
+    position: 'relative',
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
+  },
+  editAvatarButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: '35%',
+    backgroundColor: COLORS.ACCENT,
+    borderRadius: 15,
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: COLORS.WHITE,
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
     marginBottom: 20,
+    color: COLORS.PRIMARY,
   },
   section: {
     marginBottom: 20,
@@ -75,20 +183,27 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
+    color: COLORS.PRIMARY,
     marginBottom: 10,
   },
   detailRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,
-    color: COLORS.SECONDARY, 
+    color: COLORS.SECONDARY,
     fontWeight: "500",
   },
   value: {
@@ -98,19 +213,64 @@ const styles = StyleSheet.create({
   editable: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
+    gap: 8,
+  },
+  addressCard: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    paddingVertical: 10,
+    marginBottom: 10,
+  },
+  addressHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  addressName: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: COLORS.PRIMARY,
+  },
+  addressText: {
+    fontSize: 14,
+    color: COLORS.SECONDARY,
+    marginBottom: 2,
+  },
+  paymentCard: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  paymentInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   button: {
-    marginTop: 15,
+    marginTop: 10,
+    marginBottom: 10,
     paddingVertical: 12,
     paddingHorizontal: 20,
     backgroundColor: COLORS.SECONDARY,
-    borderRadius: 5,
+    borderRadius: 8,
     alignItems: "center",
   },
   buttonText: {
     color: "white",
     fontSize: 16,
     fontWeight: "500",
+  },
+  logoutButton: {
+    backgroundColor: COLORS.BACKGROUND,
+    borderWidth: 1,
+    borderColor: COLORS.SECONDARY,
+    marginTop: 5,
+  },
+  logoutText: {
+    color: COLORS.SECONDARY,
   },
 });
