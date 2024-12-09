@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from 'react
 import renderStars from './renderStars';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useQuery } from '@tanstack/react-query';
+import { getRestaurantById } from '../api/items';
 import COLORS from '../constants/colors';
 
 const RestaurantCard = ({ restaurant }) => {
@@ -25,8 +27,7 @@ const RestaurantCard = ({ restaurant }) => {
       })
     ]).start(() => {
       navigation.navigate('MenuItem', { 
-        restaurantData: restaurant,
-        fromCard: true
+        restaurant: restaurant
       });
     });
   };
@@ -53,7 +54,7 @@ const RestaurantCard = ({ restaurant }) => {
         ]}
       >
         <Animated.Image 
-          source={{ uri: restaurant.image }} 
+          source={{ uri: restaurant?.image }} 
           style={[
             styles.image,
             {
@@ -63,27 +64,27 @@ const RestaurantCard = ({ restaurant }) => {
         />
         <View style={styles.info}>
           <View style={styles.topRow}>
-            <Text style={styles.name}>{restaurant.name}</Text>
+            <Text style={styles.name}>{restaurant?.name}</Text>
             <View style={{
-              backgroundColor: getTagStyle(restaurant.rating).color, 
+              backgroundColor: getTagStyle(restaurant?.rating).color, 
               borderRadius: 15, 
               paddingHorizontal: 8, 
               paddingVertical: 3, 
               alignSelf: 'flex-start',
             }}>
-              <Text style={styles.rating}>{restaurant.rating}</Text>
+              <Text style={styles.rating}>{restaurant?.rating}</Text>
             </View>
           </View>
           <Text style={styles.category}>
-            {restaurant.category.name}
+            {restaurant?.category?.name}
           </Text>
           <View style={styles.row}>
-            {renderStars(restaurant.rating)}
+            {renderStars(restaurant?.rating)}
             <Text style={styles.reviews}> ({randomReviews} reviews)</Text>
           </View>
           <View style={styles.row}>
             <Feather name="clock" size={14} color={COLORS.PRIMARY} />
-            <Text style={styles.deliveryTime}> {restaurant.deliveryTime}</Text>
+            <Text style={styles.deliveryTime}> {restaurant?.deliveryTime}</Text>
           </View>
         </View>
       </Animated.View>

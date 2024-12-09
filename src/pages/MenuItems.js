@@ -34,12 +34,12 @@ const MenuItems = ({ route, navigation }) => {
     Animated.parallel([
       Animated.timing(slideAnim, {
         toValue: 0,
-        duration: 600, // Increased from 300 to 600
+        duration: 600,
         useNativeDriver: true,
       }),
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 800, // Increased from 400 to 800
+        duration: 800,
         useNativeDriver: true,
       }),
     ]).start();
@@ -79,7 +79,7 @@ const MenuItems = ({ route, navigation }) => {
             transform: [{ translateY: slideAnim }],
             opacity: fadeAnim.interpolate({
               inputRange: [0, 1],
-              outputRange: [0.8, 1], // Start with slight opacity
+              outputRange: [0.8, 1],
             }),
           }
         ]}
@@ -107,8 +107,8 @@ const MenuItems = ({ route, navigation }) => {
             contentContainerStyle={styles.scrollContent}
           >
             <View style={styles.items}>
-              {restaurant.menuItems.map((menuItem, index) => (
-                <View key={index} style={styles.gridItem}>
+              {restaurant.items?.map((menuItem, index) => (
+                <View key={menuItem._id} style={styles.gridItem}>
                   <MenuItemCard 
                     menuItem={{
                       ...menuItem,
