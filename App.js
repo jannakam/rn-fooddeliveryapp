@@ -1,5 +1,5 @@
-import { Fragment, createContext, useContext, useState } from "react";
-import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
+import { Fragment, useEffect } from "react";
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, ActivityIndicator } from "react-native";
 import AuthNavigation from "./src/navigation/AuthNav/AuthNavigation";
 import HomeNavigation from "./src/navigation/HomeNav/HomeNavigation";
 import { NavigationContainer } from "@react-navigation/native";
@@ -7,16 +7,35 @@ import { CartProvider } from "./src/context/CartContext";
 import { CategoryProvider } from "./src/context/CategoryContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider, useUser } from "./src/context/UserContext";
+import COLORS from "./src/constants/colors";
 
+const Navigation = () => {
+  const { userAuthenticated, isLoading, checkAuthStatus } = useUser();
+
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={COLORS.PRIMARY} />
+      </View>
+    );
+  }
+
+  return <>{userAuthenticated ? <HomeNavigation /> : <AuthNavigation />}</>;
+};
 
 export default function App() {
-  const queryClient = new QueryClient();
-
-  const Navigation = () => {
-    const { userAuthenticated } = useUser();
-  
-    return <>{userAuthenticated ? <HomeNavigation /> : <AuthNavigation />}</>;
-  };
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 2,
+        staleTime: 1000 * 60 * 5, // 5 minutes
+      },
+    },
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,42 +53,10 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  safeAreaTop: {
-    backgroundColor: "#442e54",
-    flex: 0,
-  },
-  content: {
+  loadingContainer: {
     flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  contentText: {
-    fontSize: 18,
-  },
-  safeAreaBottom: {
-    backgroundColor: "#442e54",
-    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.BACKGROUND,
   },
 });
-
-// <Fragment>
-//   <SafeAreaView style={styles.safeAreaTop} />
-//   <SafeAreaView style={styles.safeAreaBottom}>
-//     <View>
-//       <StatusBar barStyle={"light-content"} />
-//       <Header />
-//     </View>
-
-//     <View style={styles.content}>
-//       {/* <Detail menuItem={restaurants[0].menuItems[0]}/> */}
-//       {/* <Home /> */}
-//       {/* <Profile /> */}
-//       {/* <DiscoverPage /> */}
-//     </View>
-
-//     <View>
-//       <BottomNavbar />
-//     </View>
-//   </SafeAreaView>
-// </Fragment>

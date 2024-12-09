@@ -3,10 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-nati
 import { MaterialIcons } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useUser } from "../context/UserContext";
+import { logout } from "../api/auth";
 
 const ProfilePage = () => {
   const navigation = useNavigation();
   const userName = "Janna Almuqaisib";
+  const { setUserAuthenticated } = useUser();
+
+  const handleLogout = () => {
+    logout();
+    setUserAuthenticated(false);
+  }
 
   const userInitials = useMemo(() => {
     return userName
@@ -134,7 +142,7 @@ const ProfilePage = () => {
       </TouchableOpacity>
 
       {/* Logout Button */}
-      <TouchableOpacity style={[styles.button, styles.logoutButton]}>
+      <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={handleLogout}>
         <Text style={[styles.buttonText, styles.logoutText]}>Logout</Text>
       </TouchableOpacity>
     </ScrollView>
