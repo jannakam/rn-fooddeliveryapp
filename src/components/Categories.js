@@ -121,7 +121,7 @@ export default Categories;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingBottom: 10,
   },
   title: {
     fontSize: 20,

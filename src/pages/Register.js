@@ -135,7 +135,7 @@ const Register = () => {
     }
     
     if (!hasError) {
-      mutate();
+      navigation.navigate('AvatarSelection', { username, password });
     }
   };
 
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
-    paddingTop: 100,
+    paddingTop: 50,
   },
   contentContainer: {
     flex: 1,
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   inputWrapper: {
-    marginBottom: 40,
+    marginBottom: 35,
     width: '100%',
   },
   input: {
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
     top: -30,
     zIndex: 1,
     width: '100%',
+    height: 40,
     alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.SECONDARY,
     padding: 18,
     width: '100%',
-    borderRadius: 12,
+    borderRadius: 15,
     alignItems: 'center',
     opacity: 0.8, // Default lower opacity
   },
@@ -337,7 +338,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   logo: {
-    width: 200,
+    width: 150,
     height: 55,
     resizeMode: 'contain',
   },

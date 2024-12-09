@@ -29,7 +29,7 @@ const slides = [
     image: require('../../assets/landing/Screen2.png'),
   },
   {
-    id: '3',
+    id: '3',    
     title: 'The fastest delivery in town',
     subtitle: 'Get started and have your food delivered to your doorstep in under 30 minutes!',
     image: require('../../assets/landing/Screen3.png'),
@@ -87,6 +87,15 @@ const Landing = () => {
           resizeMode="cover"
         >
           <View style={styles.overlay}>
+            {index === slides.length - 1 && (
+              <View style={styles.logoContainer}>
+                <ImageBackground
+                  source={require('../../assets/logo2.png')}
+                  style={styles.logo}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
             <View style={styles.textContainer}>
               <Text style={styles.title}>{item.title}</Text>
               <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -219,6 +228,17 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+  },
+  logoContainer: {
+    position: 'absolute',
+    top: 60,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
+  logo: {
+    width: 150,
+    height: 150,
   },
 });
 

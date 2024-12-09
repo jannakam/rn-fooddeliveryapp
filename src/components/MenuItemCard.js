@@ -282,10 +282,10 @@ const styles = StyleSheet.create({
   initialAddButton: {
     backgroundColor: COLORS.ACCENT,
     paddingVertical: 8,
-    paddingHorizontal: 35,
+    paddingHorizontal: 25,
     borderRadius: 25,
     alignItems: "center",
-    minWidth: 120,
+    minWidth: 100,
   },
   addButtonText: {
     color: COLORS.WHITE,

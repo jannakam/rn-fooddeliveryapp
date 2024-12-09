@@ -147,6 +147,8 @@ const Cart = () => {
             <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
           )}
           contentContainerStyle={styles.listContent}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          showsVerticalScrollIndicator={false}
         />
       )}
 
@@ -196,7 +198,9 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   listContent: {
+    flexGrow: 1,
     paddingBottom: 20,
+    gap: 10,
   },
   totalLabel: {
     fontSize: 18,
@@ -218,7 +222,7 @@ const styles = StyleSheet.create({
   checkoutButton: {
     backgroundColor: COLORS.SECONDARY,
     paddingVertical: 12,
-    borderRadius: 5,
+    borderRadius: 25,
     alignItems: 'center',
     marginVertical: 15,
   },

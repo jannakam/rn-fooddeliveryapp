@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback 
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon5 from 'react-native-vector-icons/FontAwesome5';
 import COLORS from '../constants/colors';
 import { useNavigation } from '@react-navigation/native';
 
@@ -84,7 +85,8 @@ const OrderConfirmation = ({ route }) => {
         <View style={styles.content}>
           {/* Success Icon */}
           <View style={styles.iconContainer}>
-            <Icon name="check-circle" size={80} color={COLORS.ACCENT} />
+            {/* <Icon name="check-circle" size={80} color={COLORS.ACCENT} /> */}
+            <Icon5 name="thumbs-up" size={80} color={COLORS.ACCENT}/>
           </View>
 
           {/* Success Message */}
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.BACKGROUND,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    minHeight: height * 0.75,
+    minHeight: height * 0.5,
     padding: 20,
     shadowColor: '#000',
     shadowOffset: {

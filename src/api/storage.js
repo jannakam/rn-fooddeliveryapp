@@ -1,5 +1,5 @@
 import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const setToken = async (token) => {
   return await setItemAsync("token", token);
@@ -16,7 +16,7 @@ const removeToken = async () => {
 const checkToken = async () => {
     const token = await getToken();
     if (token) {
-      const decoded = jwt_decode(token);
+      const decoded = jwtDecode(token);
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
         await removeToken();

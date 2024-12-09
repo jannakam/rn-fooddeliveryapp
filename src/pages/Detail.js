@@ -45,39 +45,16 @@ const Detail = ({ route }) => {
   };
 
   const handleAddToCart = () => {
-    Alert.alert(
-      'Confirm Add to Cart',
-      `Would you like to add ${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} to your cart?`,
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Add to Cart',
-          onPress: () => {
-            addToCart(menuItem, quantity);
-            Alert.alert(
-              'Success',
-              `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart!`,
-              [
-                {
-                  text: 'Continue Shopping',
-                  style: 'cancel',
-                },
-                {
-                  text: 'Go to Cart',
-                  style: 'default',
-                  onPress: () => navigation.navigate('Cart'),
-                },
-              ],
-              { cancelable: true }
-            );
-          },
-        },
-      ],
-      { cancelable: true }
-    );
+    // Ensure we have a complete item object
+    const itemToAdd = {
+      id: menuItem.id,
+      name: menuItem.name,
+      price: menuItem.price,
+      image: menuItem.image,
+      description: menuItem.description
+    };
+    addToCart(itemToAdd, quantity);
+    navigation.navigate('Cart');
   };
 
   return (
@@ -180,7 +157,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     textAlign: 'center',
     zIndex: 10,
-    color: COLORS.LIGHT,
+    color: COLORS.WHITE,
   },
   description: {
     fontSize: 16,
@@ -213,7 +190,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginHorizontal: 20,
     marginBottom: 40,
-    borderRadius: 10,
+    borderRadius: 30,
     alignItems: 'center',
   },
   addToCartText: {
