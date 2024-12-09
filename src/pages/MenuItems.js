@@ -62,13 +62,13 @@ const MenuItems = ({ route, navigation }) => {
       <StatusBar style="auto" />
 
       {/* Fixed Background Section */}
+      <View style={styles.imageOverlay} />
       <View style={styles.imageContainer}>
         <Image 
           source={{ uri: restaurant.image }} 
           style={styles.image}
           resizeMode="cover"
         />
-        <View style={styles.imageOverlay} />
       </View>
 
       {/* Animated Card Content */}
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: "relative",
     width: "100%",
-    height: 200,
+    height: "200",
   },
   image: {
     width: "100%",
@@ -153,6 +153,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    width: "100vw",
+    height: "100vh",
+    zIndex: 2,
     backgroundColor: "rgba(0, 0, 0, 0.5)", // Restored to original 0.5 opacity
   },
   cardContainer: {
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 5,
+    zIndex: 3,
     overflow: "hidden",
   },
   header: {
