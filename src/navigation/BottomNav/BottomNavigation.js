@@ -13,8 +13,8 @@ const BottomNavigation = () => {
       screenOptions={{
         tabBarStyle: {
           backgroundColor: COLORS.PRIMARY,
-          borderTopWidth: 1,
-          borderColor: '#ddd',
+          borderTopWidth: 0,
+          // borderColor: '#ddd',
           paddingVertical: 10,
           height: 90,
         },
@@ -72,7 +72,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.ACCENT,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: -40,
+    marginTop: -25,
+    // outlineWidth: 3,
+    // borderColor: COLORS.PRIMARY,
     elevation: 5,
     shadowColor: COLORS.SHADOW,
     shadowOffset: { width: 0, height: 2 },

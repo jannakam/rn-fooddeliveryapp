@@ -102,7 +102,9 @@ const Cart = () => {
           <Text style={styles.addressHeaderText}>
             {selectedAddress ? `Deliver to: ${selectedAddress.name}` : 'Select Delivery Address'}
           </Text>
-          <Text style={styles.dropdownIcon}>{isAddressDropdownOpen ? <Icon name="chevron-down"/> : <Icon name="chevron-right" />}</Text>
+          <View style={styles.dropdownIcon}>
+            {isAddressDropdownOpen ? <Icon name="chevron-down"/> : <Icon name="chevron-right" />}
+          </View>
         </TouchableOpacity>
         
         {isAddressDropdownOpen && (
@@ -140,7 +142,7 @@ const Cart = () => {
       ) : (
         <FlatList
           data={cartItems}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => (item?.id || Math.random()).toString()}
           renderItem={({ item }) => (
             <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
           )}

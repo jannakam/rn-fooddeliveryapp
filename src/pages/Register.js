@@ -1,18 +1,26 @@
 import { StyleSheet, Text, View, TextInput, SafeAreaView, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../App';
 import COLORS from '../constants/colors';
+import { register } from '../api/auth';
+import { useMutation } from '@tanstack/react-query';
+import { useUser } from '../context/UserContext';
 
 const Register = () => {
   const navigation = useNavigation();
-
-  const { setIsAuthenticated } = useAuth();
+  const { setUserAuthenticated } = useUser();
 
   const handleRegister = () => {
     // Simulate login process
-    setIsAuthenticated(true); // Switch to HomeNavigation
+    mutate();
+    setUserAuthenticated(true); // Switch to HomeNavigation
   };
+
+  const { mutate } = useMutation({
+    mutationKey: ["register"],
+    mutationFn: () => register(userInfo),
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <KeyboardAvoidingView 

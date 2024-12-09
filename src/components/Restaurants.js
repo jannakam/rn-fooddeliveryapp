@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { ScrollView, StyleSheet, Text, View, Animated } from "react-native";
+import React, { useEffect, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import RestaurantCard from "./RestaurantCard";
 import COLORS from "../constants/colors";
@@ -7,20 +7,68 @@ import { useCategory } from '../context/CategoryContext';
 import { useQuery } from "@tanstack/react-query";
 import { getAllRestaurants } from "../api/items";
 
+const LoadingSkeleton = () => {
+  const fadeAnim = useRef(new Animated.Value(0.3)).current;
+
+  useEffect(() => {
+    const animation = Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0.3,
+          duration: 800,
+          useNativeDriver: true,
+        }),
+      ])
+    );
+    animation.start();
+    return () => animation.stop();
+  }, []);
+
+  return (
+    <View style={styles.skeletonContainer}>
+      {[1, 2, 3].map((_, index) => (
+        <Animated.View
+          key={index}
+          style={[
+            styles.skeletonCard,
+            { opacity: fadeAnim }
+          ]}
+        />
+      ))}
+    </View>
+  );
+};
+
 const Restaurants = () => {
   const { selectedCategory } = useCategory();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  
   const { data: restaurants, isLoading, isError } = useQuery({
     queryKey: ["restaurants"],
     queryFn: getAllRestaurants,
   });
 
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.message}>Loading restaurants...</Text>
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (restaurants) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [restaurants]);
+
+  // Filter restaurants based on selected category
+  const filteredRestaurants = selectedCategory
+    ? restaurants?.filter(restaurant => restaurant.category.name === selectedCategory)
+    : restaurants;
+
+  const openCount = filteredRestaurants?.length || 0;
 
   if (isError) {
     return (
@@ -29,13 +77,6 @@ const Restaurants = () => {
       </View>
     );
   }
-
-  // Filter restaurants based on selected category
-  const filteredRestaurants = selectedCategory
-    ? restaurants.filter(restaurant => restaurant.category.name === selectedCategory)
-    : restaurants;
-
-  const openCount = filteredRestaurants?.length || 0;
 
   return (
     <View style={styles.container}>
@@ -51,21 +92,25 @@ const Restaurants = () => {
         </View>
       </LinearGradient>
 
-      {filteredRestaurants?.length === 0 ? (
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : filteredRestaurants?.length === 0 ? (
         <View style={styles.noResultsContainer}>
           <Text style={styles.noResultsText}>No restaurants found</Text>
         </View>
       ) : (
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <View>
-            {filteredRestaurants?.map((restaurant) => (
-              <RestaurantCard key={restaurant._id} restaurant={restaurant} />
-            ))}
-          </View>
-        </ScrollView>
+        <Animated.View style={{ opacity: fadeAnim, flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
+            <View>
+              {filteredRestaurants?.map((restaurant) => (
+                <RestaurantCard key={restaurant._id} restaurant={restaurant} />
+              ))}
+            </View>
+          </ScrollView>
+        </Animated.View>
       )}
     </View>
   );
@@ -124,5 +169,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
     color: COLORS.SECONDARY,
+  },
+  skeletonContainer: {
+    paddingTop: 60,
+    gap: 20,
+  },
+  skeletonCard: {
+    height: 200,
+    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
+    borderRadius: 15,
+    marginHorizontal: 10,
   },
 });

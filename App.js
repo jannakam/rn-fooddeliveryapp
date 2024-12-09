@@ -1,42 +1,34 @@
 import { Fragment, createContext, useContext, useState } from "react";
 import { StyleSheet, Text, View, StatusBar, SafeAreaView } from "react-native";
-import Detail from "./src/pages/Detail";
-import Login from "./src/pages/Login";
-import Register from "./src/pages/Register";
-import MenuItems from "./src/pages/MenuItems";
-import Cart from "./src/pages/Cart";
-import Restaurants from "./src/components/Restaurants";
-import BottomNavbar from "./src/components/BottomNavbar";
-import Header from "./src/components/Header";
-import restaurants from "./src/data/restaurants";
-import Categories from "./src/components/Categories";
-import Home from "./src/pages/Home";
-import Profile from "./src/pages/Profile";
-import DiscoverPage from "./src/pages/DiscoverPage";
 import AuthNavigation from "./src/navigation/AuthNav/AuthNavigation";
 import HomeNavigation from "./src/navigation/HomeNav/HomeNavigation";
 import { NavigationContainer } from "@react-navigation/native";
 import { CartProvider } from "./src/context/CartContext";
 import { CategoryProvider } from "./src/context/CategoryContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserProvider, useUser } from "./src/context/UserContext";
 
-const AuthContext = createContext();
 
 export default function App() {
   const queryClient = new QueryClient();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const Navigation = () => {
+    const { userAuthenticated } = useUser();
+  
+    return <>{userAuthenticated ? <HomeNavigation /> : <AuthNavigation />}</>;
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-      <CartProvider>
-        <CategoryProvider>
-          <NavigationContainer>
-            {isAuthenticated ? <HomeNavigation /> : <AuthNavigation />}
-          </NavigationContainer>
-        </CategoryProvider>
-      </CartProvider>
-    </AuthContext.Provider>
+      <UserProvider>
+        <CartProvider>
+          <CategoryProvider>
+            <NavigationContainer>
+              <Navigation />
+            </NavigationContainer>
+          </CategoryProvider>
+        </CartProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }
@@ -61,17 +53,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const useAuth = () => useContext(AuthContext);
-
-
-
 // <Fragment>
 //   <SafeAreaView style={styles.safeAreaTop} />
 //   <SafeAreaView style={styles.safeAreaBottom}>
 //     <View>
 //       <StatusBar barStyle={"light-content"} />
 //       <Header />
-//     </View> 
+//     </View>
 
 //     <View style={styles.content}>
 //       {/* <Detail menuItem={restaurants[0].menuItems[0]}/> */}
@@ -84,4 +72,4 @@ export const useAuth = () => useContext(AuthContext);
 //       <BottomNavbar />
 //     </View>
 //   </SafeAreaView>
-// </Fragment> 
+// </Fragment>

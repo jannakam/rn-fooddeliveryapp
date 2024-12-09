@@ -1,5 +1,5 @@
 import { View, Text, StatusBar } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../../pages/Home";
 import DiscoverPage from "../../pages/DiscoverPage";
@@ -17,7 +17,7 @@ const Stack = createNativeStackNavigator();
 const commonScreenOptions = {
   header: () => (
     <>
-      <StatusBar backgroundColor={COLORS.PRIMARY} barStyle="light-content" />
+      <StatusBar backgroundColor={COLORS.PRIMARY} barStyle="auto" />
       <Header />
     </>
   ),

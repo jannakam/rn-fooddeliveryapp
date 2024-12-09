@@ -5,35 +5,35 @@ import myFood from '../data/myFood';
 import COLORS from '../constants/colors';
 
 const CartItemCard = ({ menuItem, updateQuantity }) => {
+  if (!menuItem) return null;
+
   return (
     <View style={styles.container}>
       {/* Image on the left */}
-      <Image source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }} style={styles.image} />
+      <Image 
+        source={myFood[menuItem?.name?.toLowerCase()?.trim()] || { uri: menuItem?.image }} 
+        style={styles.image} 
+      />
 
       {/* Item Details and Quantity Modifier */}
       <View style={styles.detailsContainer}>
         {/* Details */}
         <View style={styles.details}>
-          <Text style={styles.itemName}>{menuItem.name}</Text>
-          {/* <Text style={styles.itemDescription}>
-            {menuItem.description.length > 50
-              ? `${menuItem.description.slice(0, 50)}...`
-              : menuItem.description}
-          </Text> */}
-          <Text style={styles.price}>{menuItem.price.toFixed(2)} KWD</Text>
+          <Text style={styles.itemName}>{menuItem?.name || 'Unknown Item'}</Text>
+          <Text style={styles.price}>{(menuItem?.price || 0).toFixed(2)} KWD</Text>
         </View>
 
         {/* Quantity Modifier */}
         <View style={styles.quantityModifier}>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem.id, Math.max(0, menuItem.quantity - 1))}
+            onPress={() => updateQuantity(menuItem?.id, Math.max(0, (menuItem?.quantity || 0) - 1))}
             style={styles.button}
           >
             <Icon name="minus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
-          <Text style={styles.quantity}>{menuItem.quantity}</Text>
+          <Text style={styles.quantity}>{menuItem?.quantity || 0}</Text>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem.id, menuItem.quantity + 1)}
+            onPress={() => updateQuantity(menuItem?.id, (menuItem?.quantity || 0) + 1)}
             style={styles.button}
           >
             <Icon name="plus" size={12} color={COLORS.WHITE} />

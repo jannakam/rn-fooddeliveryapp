@@ -1,23 +1,20 @@
-import instance from "./index";
+import axios from "axios";
 
-async function login(username, password) {
-    const response = await instance.post("/auth/login", { username, password });
-    return response.data;
+const register = async (userInfo) => {
+  const formData = new FormData();
+  for (const key in userInfo) {
+    formData.append(key, userInfo[key]);
   }
+  const response = await axios.post("/auth/register", formData);
+  setToken(response.data.token);
+  return response.data;
+};
 
-async function register(username, password, image) {
-    const response = await instance.post("/auth/register", { username, password, image });
-    return response.data;
-  }
+const login = async (userInfo) => {
+  const response = await axios.post("/auth/login", userInfo);
+  setToken(response.data.token);
+  return response.data;
+};
 
-async function logout() {
-    const response = await instance.post("/auth/logout");
-    return response.data;
-  }
 
-async function getProfile() {
-    const response = await instance.get("/auth/profile");
-    return response.data;
-  }
-
-export { login, register, logout, getProfile };
+export { login, register };

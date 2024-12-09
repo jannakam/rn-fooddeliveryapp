@@ -1,69 +1,117 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Animated,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import myFood from "../data/myFood";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../constants/colors";
-import { useCart } from '../context/CartContext';
+import { useCart } from "../context/CartContext";
 
 const MenuItemCard = ({ menuItem }) => {
   const navigation = useNavigation();
   const [quantity, setQuantity] = useState(0);
+  const [showQuantityModifier, setShowQuantityModifier] = useState(false);
   const { addToCart } = useCart();
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const colorAnim = useRef(new Animated.Value(0)).current;
+
+  const showModifier = () => {
+    setShowQuantityModifier(true);
+    setQuantity(1);
+    addToCart(menuItem, 1);
+
+    // Run both animations in parallel
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: 1,
+        duration: 400, // Slightly longer for color transition
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
+  const hideModifier = () => {
+    Animated.parallel([
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: false,
+      }),
+      Animated.timing(colorAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false,
+      }),
+    ]).start(() => {
+      setShowQuantityModifier(false);
+    });
+  };
+
+  const backgroundColor = colorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [COLORS.WHITE, COLORS.ACCENT],
+  });
+
+  const textColor = colorAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [COLORS.ACCENT, COLORS.WHITE],
+  });
 
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setQuantity((prev) => {
+      const newQuantity = prev + 1;
+      addToCart(menuItem, 1);
+      return newQuantity;
+    });
   };
 
   const decreaseQuantity = () => {
-    setQuantity((prev) => (prev > 0 ? prev - 1 : 0)); // Prevent negative quantity
+    setQuantity((prev) => {
+      if (prev <= 1) {
+        hideModifier();
+        addToCart(menuItem, -prev);
+        return 0;
+      }
+      addToCart(menuItem, -1);
+      return prev - 1;
+    });
   };
 
-  const handleAdd = () => {
-    if (quantity > 0) {
-      Alert.alert(
-        'Confirm Add to Cart',
-        `Would you like to add ${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} to your cart?`,
-        [
-          {
-            text: 'Cancel',
-            style: 'cancel',
-          },
-          {
-            text: 'Add to Cart',
-            onPress: () => {
-              addToCart(menuItem, quantity);
-              setQuantity(0); // Reset quantity after adding
-              Alert.alert(
-                'Added to Cart',
-                `${quantity} ${menuItem.name}${quantity > 1 ? 's' : ''} added to cart`,
-                [
-                  {
-                    text: 'Continue Shopping',
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'Go to Cart',
-                    onPress: () => navigation.navigate('Cart'),
-                  },
-                ]
-              );
-            },
-          },
-        ]
-      );
-    }
+  const displayCartItem = (item) => {
+    if (!item) return null;
+    
+    return (
+      <View>
+        <Text>{item?.name || 'Unknown Item'}</Text>
+        <Text>{item?.price?.toString() || '0'}</Text>
+      </View>
+    );
   };
 
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       style={styles.wrapper}
-      onPress={() => navigation.navigate('Detail', { menuItem })}
+      onPress={() => navigation.navigate("Detail", { menuItem })}
     >
       {/* Image positioned absolutely */}
       <View style={styles.imageContainer}>
         <Image
-          source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }}
+          source={
+            myFood[menuItem.name.toLowerCase().trim()] || {
+              uri: menuItem.image,
+            }
+          }
           style={styles.image}
         />
       </View>
@@ -81,28 +129,68 @@ const MenuItemCard = ({ menuItem }) => {
 
         {/* Quantity Modifier and Add Button in Column */}
         <View style={styles.actionsColumn}>
-          {/* Quantity Modifier */}
-          <View style={styles.quantityModifier}>
-            <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-              <Icon name="minus" size={14} color={COLORS.WHITE} />
-            </TouchableOpacity>
-            <Text style={styles.quantity}>{quantity}</Text>
-            <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-              <Icon name="plus" size={14} color={COLORS.WHITE} />
-            </TouchableOpacity>
-          </View>
+          {showQuantityModifier ? (
+            <Animated.View
+              style={[styles.quantityContainer, { opacity: fadeAnim }]}
+            >
+              <Animated.View
+                style={[
+                  styles.quantityModifier,
+                  {
+                    transform: [
+                      {
+                        scale: fadeAnim.interpolate({
+                          inputRange: [0, 1],
+                          outputRange: [0.9, 1],
+                        }),
+                      },
+                    ],
+                  },
+                ]}
+              >
+                <TouchableOpacity
+                  onPress={decreaseQuantity}
+                  style={styles.buttonContainer}
+                >
+                  <Animated.View
+                    style={[
+                      styles.button,
+                      { backgroundColor: backgroundColor },
+                    ]}
+                  >
+                    <Icon name="minus" size={14} color={COLORS.WHITE} />
+                  </Animated.View>
+                </TouchableOpacity>
 
-          {/* Add Button */}
-          <TouchableOpacity 
-            onPress={handleAdd} 
-            style={[
-              styles.addButton,
-              quantity === 0 && styles.addButtonDisabled
-            ]}
-            disabled={quantity === 0}
-          >
-            <Text style={styles.addButtonText}>Add</Text>
-          </TouchableOpacity>
+                <Animated.Text
+                  style={[styles.quantity, { color: COLORS.PRIMARY }]}
+                >
+                  {quantity}
+                </Animated.Text>
+
+                <TouchableOpacity
+                  onPress={increaseQuantity}
+                  style={styles.buttonContainer}
+                >
+                  <Animated.View
+                    style={[
+                      styles.button,
+                      { backgroundColor: backgroundColor },
+                    ]}
+                  >
+                    <Icon name="plus" size={14} color={COLORS.WHITE} />
+                  </Animated.View>
+                </TouchableOpacity>
+              </Animated.View>
+            </Animated.View>
+          ) : (
+            <TouchableOpacity
+              onPress={showModifier}
+              style={styles.initialAddButton}
+            >
+              <Text style={styles.addButtonText}>Add</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -127,7 +215,7 @@ const styles = StyleSheet.create({
     height: 180,
     borderRadius: 100, // Half of the new dimensions
   },
-  
+
   container: {
     backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
     shadowColor: COLORS.SHADOW,
@@ -137,7 +225,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     marginTop: 30, // Push content down to avoid overlapping with the image
-    height: 310,
+    height: 270,
     justifyContent: "space-between",
     alignItems: "center",
   },
@@ -165,37 +253,39 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
   },
+  quantityContainer: {
+    alignItems: "center",
+    width: "100%",
+  },
   quantityModifier: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 5,
+    gap: 10,
+  },
+  buttonContainer: {
+    padding: 5,
   },
   button: {
-    padding: 5,
-    borderRadius: 15,
-    backgroundColor: COLORS.SECONDARY,
-    alignItems: "center",
-    justifyContent: "center",
     width: 24,
     height: 24,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
   },
   quantity: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
-    minWidth: 20,
+    minWidth: 30,
     textAlign: "center",
   },
-  addButton: {
+  initialAddButton: {
     backgroundColor: COLORS.ACCENT,
-    paddingVertical: 5,
-    paddingHorizontal: 25,
-    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 35,
+    borderRadius: 25,
     alignItems: "center",
-  },
-  addButtonDisabled: {
-    backgroundColor: COLORS.SECONDARY,
-    opacity: 0.5,
+    minWidth: 120,
   },
   addButtonText: {
     color: COLORS.WHITE,
