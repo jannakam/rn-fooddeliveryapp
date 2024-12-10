@@ -6,24 +6,33 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (item, quantity) => {
+    if (!item || !item._id) return; // Add validation
+    
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(i => i.id === item.id);
-      if (existingItem) {
-        return prevItems.map(i =>
-          i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
-        );
+      const existingItemIndex = prevItems.findIndex(i => i._id === item._id);
+      
+      if (existingItemIndex !== -1) {
+        const updatedItems = [...prevItems];
+        updatedItems[existingItemIndex] = {
+          ...prevItems[existingItemIndex],
+          quantity: prevItems[existingItemIndex].quantity + quantity
+        };
+        return updatedItems;
       }
+      
       return [...prevItems, { ...item, quantity }];
     });
   };
 
-  const updateQuantity = (id, newQuantity) => {
+  const updateQuantity = (itemId, newQuantity) => {
+    if (!itemId) return; // Add validation
+    
     setCartItems(prevItems => {
       if (newQuantity === 0) {
-        return prevItems.filter(item => item.id !== id);
+        return prevItems.filter(item => item._id !== itemId);
       }
       return prevItems.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
+        item._id === itemId ? { ...item, quantity: newQuantity } : item
       );
     });
   };
@@ -36,13 +45,18 @@ export const CartProvider = ({ children }) => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const getCartItemsCount = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
   return (
     <CartContext.Provider value={{
       cartItems,
       addToCart,
       updateQuantity,
       clearCart,
-      getCartTotal
+      getCartTotal,
+      getCartItemsCount
     }}>
       {children}
     </CartContext.Provider>

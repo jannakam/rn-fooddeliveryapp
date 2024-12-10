@@ -47,14 +47,16 @@ const Detail = ({ route }) => {
   const handleAddToCart = () => {
     // Ensure we have a complete item object
     const itemToAdd = {
-      id: menuItem.id,
+      _id: menuItem._id,
       name: menuItem.name,
       price: menuItem.price,
       image: menuItem.image,
-      description: menuItem.description
+      description: menuItem.description,
+      ...menuItem
     };
+    
     addToCart(itemToAdd, quantity);
-    navigation.navigate('Cart');
+    
   };
 
   return (

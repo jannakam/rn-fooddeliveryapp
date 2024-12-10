@@ -142,7 +142,7 @@ const Cart = () => {
       ) : (
         <FlatList
           data={cartItems}
-          keyExtractor={(item) => (item?.id || Math.random()).toString()}
+          keyExtractor={(item) => (item?._id || Math.random()).toString()}
           renderItem={({ item }) => (
             <CartItemCard menuItem={item} updateQuantity={updateQuantity} />
           )}
@@ -199,8 +199,6 @@ const styles = StyleSheet.create({
   },
   listContent: {
     flexGrow: 1,
-    paddingBottom: 20,
-    gap: 10,
   },
   totalLabel: {
     fontSize: 18,
@@ -234,7 +232,7 @@ const styles = StyleSheet.create({
   addressSection: {
     marginBottom: 20,
     backgroundColor: COLORS.BACKGROUND,
-    borderRadius: 5,
+    borderRadius: 25,
     overflow: 'hidden',
   },
   addressHeader: {

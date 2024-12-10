@@ -8,6 +8,13 @@ import { CategoryProvider } from "./src/context/CategoryContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider, useUser } from "./src/context/UserContext";
 import COLORS from "./src/constants/colors";
+import {
+  useFonts,
+  OpenSans_400Regular,
+  OpenSans_600SemiBold,
+  OpenSans_700Bold,
+  OpenSans_800ExtraBold,
+} from '@expo-google-fonts/open-sans';
 
 const Navigation = () => {
   const { userAuthenticated, isLoading, checkAuthStatus } = useUser();
@@ -36,6 +43,17 @@ export default function App() {
       },
     },
   });
+
+  let [fontsLoaded] = useFonts({
+    OpenSans_400Regular,
+    OpenSans_600SemiBold,
+    OpenSans_700Bold,
+    OpenSans_800ExtraBold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <QueryClientProvider client={queryClient}>

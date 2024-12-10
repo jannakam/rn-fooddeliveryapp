@@ -26,14 +26,14 @@ const CartItemCard = ({ menuItem, updateQuantity }) => {
         {/* Quantity Modifier */}
         <View style={styles.quantityModifier}>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem?.id, Math.max(0, (menuItem?.quantity || 0) - 1))}
+            onPress={() => updateQuantity(menuItem?._id, Math.max(0, (menuItem?.quantity || 0) - 1))}
             style={styles.button}
           >
             <Icon name="minus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
           <Text style={styles.quantity}>{menuItem?.quantity || 0}</Text>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem?.id, (menuItem?.quantity || 0) + 1)}
+            onPress={() => updateQuantity(menuItem?._id, (menuItem?.quantity || 0) + 1)}
             style={styles.button}
           >
             <Icon name="plus" size={12} color={COLORS.WHITE} />
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     // elevation: 2,
     // borderRadius: 10,
     alignItems: 'center',
-    padding: 10,
+    backgroundColor: COLORS.BACKGROUND,
+    paddingHorizontal: 10,
   },
   image: {
     width: 150,
@@ -70,6 +71,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
+    shadowColor: 'grey',
+    shadowOffset: { width: 0, height: 4 },
+    padding: 10,
+    paddingVertical: 15,
+    shadowOpacity: 0.2,
+    elevation: 2,
     // paddingHorizontal: 10,
   },
   details: {

@@ -149,9 +149,15 @@ const Profile = () => {
                 <View style={styles.header}>
                     <View style={styles.avatarContainer}>
                         <Image
-                            source={{ uri: profile?.image }}
+                            source={profile?.image ? { uri: profile.image } : require('../../assets/avatars/avatar3.png')}
                             style={styles.avatar}
-                            defaultSource={require('../../assets/avatars/avatar1.png')}
+                            onError={(error) => {
+                                console.log('Error loading profile image:', error);
+                                setProfile(prev => ({
+                                    ...prev,
+                                    image: null
+                                }));
+                            }}
                         />
                         <TouchableOpacity 
                             style={styles.editAvatarButton}
@@ -178,7 +184,7 @@ const Profile = () => {
                     </View>
                     <View style={styles.detailRow}>
                         <Text style={styles.label}>Email:</Text>
-                        <Text style={styles.value}>janna@gmail.com</Text>
+                        <Text style={styles.value}>{profile?.username}@wainik.com</Text>
                     </View>
                     <View style={styles.detailRow}>
                         <Text style={styles.label}>Phone:</Text>
@@ -273,6 +279,7 @@ const Profile = () => {
                             <ScrollView 
                                 contentContainerStyle={styles.avatarGridContainer}
                                 showsVerticalScrollIndicator={false}
+                                scrollEnabled={false}
                             >
                                 <View style={styles.avatarGrid}>
                                     {avatarOptions.map((avatar, index) => (
@@ -354,6 +361,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         color: COLORS.WHITE,
+        fontFamily: 'OpenSans_600SemiBold',
     },
     section: {
         marginHorizontal: 20,
@@ -499,7 +507,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         overflow: 'hidden',
-        maxHeight: '70%',
+        maxHeight: '80%',
         minHeight: 300,
         elevation: 5,
         shadowColor: '#000',
@@ -509,6 +517,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
+        marginBottom: 30,
     },
     modalContent: {
         flex: 1,
