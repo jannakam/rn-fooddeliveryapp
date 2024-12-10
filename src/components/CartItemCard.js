@@ -1,46 +1,86 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import myFood from '../data/myFood';
-import COLORS from '../constants/colors';
+import React, { useEffect, useRef } from "react";
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import myFood from "../data/myFood";
+import COLORS from "../constants/colors";
 
 const CartItemCard = ({ menuItem, updateQuantity }) => {
+  const scaleAnim = useRef(new Animated.Value(0.95)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: true,
+        tension: 50,
+        friction: 7,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  }, []);
+
   if (!menuItem) return null;
 
   return (
-    <View style={styles.container}>
+    <Animated.View style={[
+      styles.container,
+      {
+        opacity: opacityAnim,
+        transform: [{ scale: scaleAnim }],
+      }
+    ]}>
       {/* Image on the left */}
-      <Image 
-        source={myFood[menuItem?.name?.toLowerCase()?.trim()] || { uri: menuItem?.image }} 
-        style={styles.image} 
+      <Image
+        source={
+          myFood[menuItem?.name?.toLowerCase()?.trim()] || {
+            uri: menuItem?.image,
+          }
+        }
+        style={styles.image}
       />
 
       {/* Item Details and Quantity Modifier */}
       <View style={styles.detailsContainer}>
         {/* Details */}
         <View style={styles.details}>
-          <Text style={styles.itemName}>{menuItem?.name || 'Unknown Item'}</Text>
-          <Text style={styles.price}>{(menuItem?.price || 0).toFixed(2)} KWD</Text>
+          <Text style={styles.itemName}>
+            {menuItem?.name || "Unknown Item"}
+          </Text>
+          <Text style={styles.price}>
+            {(menuItem?.price || 0).toFixed(2)} KWD
+          </Text>
         </View>
 
         {/* Quantity Modifier */}
         <View style={styles.quantityModifier}>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem?._id, Math.max(0, (menuItem?.quantity || 0) - 1))}
+            onPress={() =>
+              updateQuantity(
+                menuItem?._id,
+                Math.max(0, (menuItem?.quantity || 0) - 1)
+              )
+            }
             style={styles.button}
           >
             <Icon name="minus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
           <Text style={styles.quantity}>{menuItem?.quantity || 0}</Text>
           <TouchableOpacity
-            onPress={() => updateQuantity(menuItem?._id, (menuItem?.quantity || 0) + 1)}
+            onPress={() =>
+              updateQuantity(menuItem?._id, (menuItem?.quantity || 0) + 1)
+            }
             style={styles.button}
           >
             <Icon name="plus" size={12} color={COLORS.WHITE} />
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -48,14 +88,14 @@ export default CartItemCard;
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    flexDirection: "row",
     // backgroundColor: '#fff', // Matching MenuItemCard background color
     // shadowColor: 'grey',
     // shadowOffset: { width: 0, height: 4 },
     // shadowOpacity: 0.2,
     // elevation: 2,
     // borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
     backgroundColor: COLORS.BACKGROUND,
     paddingHorizontal: 10,
   },
@@ -66,12 +106,12 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: COLORS.BACKGROUND,
     borderRadius: 10,
-    shadowColor: 'grey',
+    shadowColor: "grey",
     shadowOffset: { width: 0, height: 4 },
     padding: 10,
     paddingVertical: 15,
@@ -83,36 +123,36 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemName: {
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: "OpenSans_700Bold",
     fontSize: 16,
-    color: COLORS.PRIMARY, 
+    color: COLORS.PRIMARY,
     marginBottom: 5,
   },
   itemDescription: {
-    color: COLORS.SECONDARY, 
+    color: COLORS.SECONDARY,
     fontSize: 12,
-    fontFamily: 'OpenSans_400Regular',
+    fontFamily: "OpenSans_400Regular",
   },
   price: {
-    fontFamily: 'OpenSans_600SemiBold',
+    fontFamily: "OpenSans_600SemiBold",
     fontSize: 14,
-    color: COLORS.SECONDARY, 
+    color: COLORS.SECONDARY,
     marginTop: 5,
   },
   quantityModifier: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   button: {
     padding: 8,
     borderRadius: 20,
-    backgroundColor: COLORS.ACCENT, 
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: COLORS.ACCENT,
+    alignItems: "center",
+    justifyContent: "center",
   },
   quantity: {
     fontSize: 14,
-    fontFamily: 'OpenSans_600SemiBold',
+    fontFamily: "OpenSans_600SemiBold",
     marginHorizontal: 10,
   },
 });

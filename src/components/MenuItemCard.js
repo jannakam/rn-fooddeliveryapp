@@ -90,11 +90,11 @@ const MenuItemCard = ({ menuItem }) => {
 
   const displayCartItem = (item) => {
     if (!item) return null;
-    
+
     return (
       <View>
-        <Text>{item?.name || 'Unknown Item'}</Text>
-        <Text>{item?.price?.toString() || '0'}</Text>
+        <Text>{item?.name || "Unknown Item"}</Text>
+        <Text>{item?.price?.toString() || "0"}</Text>
       </View>
     );
   };
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   itemName: {
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: "OpenSans_700Bold",
     fontSize: 16,
     textAlign: "center",
     marginTop: 50,
@@ -241,10 +241,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: "center",
     fontSize: 12,
-    fontFamily: 'OpenSans_400Regular',
+    fontFamily: "OpenSans_400Regular",
   },
   price: {
-    fontFamily: 'OpenSans_600SemiBold',
+    fontFamily: "OpenSans_600SemiBold",
     fontSize: 14,
     color: COLORS.SECONDARY,
     textAlign: "center",
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 16,
-    fontFamily: 'OpenSans_600SemiBold',
+    fontFamily: "OpenSans_600SemiBold",
     minWidth: 30,
     textAlign: "center",
   },
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: COLORS.WHITE,
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: "OpenSans_700Bold",
     fontSize: 14,
   },
 });

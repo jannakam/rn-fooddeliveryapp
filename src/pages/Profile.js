@@ -166,7 +166,7 @@ const Profile = () => {
                             <MaterialIcons name="edit" size={20} color={COLORS.WHITE} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.username}>{profile?.username}</Text>
+                    <Text style={styles.username}>{profile?.username.charAt(0).toUpperCase() + profile?.username.slice(1)}</Text>
                     <Text style={styles.points}>Points: {Math.floor(Math.random() * 1000)}</Text>
                 </View>
 

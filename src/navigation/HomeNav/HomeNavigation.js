@@ -21,23 +21,24 @@ const commonScreenOptions = {
       <Header />
     </>
   ),
+  animation: 'fade',
+  animationDuration: 200,
 };
 
 export const HomeStack = () => {
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
+    <Stack.Navigator 
+      screenOptions={{
+        ...commonScreenOptions,
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress
+          }
+        })
+      }}
+    >
       <Stack.Screen name="HomeScreen" component={Home} />
-      <Stack.Screen 
-        name="MenuItem" 
-        component={MenuItems}
-        options={{
-          cardStyleInterpolator: ({ current: { progress } }) => ({
-            cardStyle: {
-              opacity: progress
-            }
-          })
-        }}
-      />
+      <Stack.Screen name="MenuItem" component={MenuItems} />
       <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
@@ -47,19 +48,18 @@ export const HomeStack = () => {
 
 export const DiscoverStack = () => {
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
+    <Stack.Navigator 
+      screenOptions={{
+        ...commonScreenOptions,
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress
+          }
+        })
+      }}
+    >
       <Stack.Screen name="DiscoverScreen" component={DiscoverPage} />
-      <Stack.Screen 
-        name="MenuItem" 
-        component={MenuItems}
-        options={{
-          cardStyleInterpolator: ({ current: { progress } }) => ({
-            cardStyle: {
-              opacity: progress
-            }
-          })
-        }}
-      />
+      <Stack.Screen name="MenuItem" component={MenuItems} />
       <Stack.Screen name="Detail" component={Detail} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="OrderConfirmation" component={OrderConfirmation} />
@@ -69,7 +69,16 @@ export const DiscoverStack = () => {
 
 export const ProfileStack = () => {
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
+    <Stack.Navigator 
+      screenOptions={{
+        ...commonScreenOptions,
+        cardStyleInterpolator: ({ current: { progress } }) => ({
+          cardStyle: {
+            opacity: progress
+          }
+        })
+      }}
+    >
       <Stack.Screen name="ProfileScreen" component={Profile} />
       <Stack.Screen name="Cart" component={Cart} />
       <Stack.Screen name="OrderHistory" component={OrderHistory} />

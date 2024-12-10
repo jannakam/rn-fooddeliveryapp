@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Animated } from 'react-native';
+import React, { useRef, useEffect } from 'react';
 import flags from '../data/myFlags';
 import COLORS from '../constants/colors';
 import { useCategory } from '../context/CategoryContext';
@@ -7,6 +7,40 @@ import { useCategory } from '../context/CategoryContext';
 const CategoryCard = ({ category }) => {
   const { selectedCategory, setSelectedCategory } = useCategory();
   const isSelected = selectedCategory === category.categoryName;
+  const scaleAnim = useRef(new Animated.Value(0.9)).current;
+  const bounceAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 50,
+      friction: 7,
+    }).start();
+  }, []);
+
+  useEffect(() => {
+    if (isSelected) {
+      Animated.sequence([
+        Animated.timing(bounceAnim, {
+          toValue: 1.1,
+          duration: 200,
+          useNativeDriver: true,
+        }),
+        Animated.spring(bounceAnim, {
+          toValue: 1.05,
+          friction: 4,
+          useNativeDriver: true,
+        }),
+      ]).start();
+    } else {
+      Animated.spring(bounceAnim, {
+        toValue: 1,
+        friction: 4,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isSelected]);
 
   const handlePress = () => {
     setSelectedCategory(isSelected ? null : category.categoryName);
@@ -14,14 +48,24 @@ const CategoryCard = ({ category }) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-      <View style={[styles.container, isSelected && styles.selectedContainer]}>
+      <Animated.View 
+        style={[
+          styles.container,
+          {
+            transform: [
+              { scale: scaleAnim },
+              { scale: bounceAnim }
+            ]
+          }
+        ]}
+      >
         <View style={[styles.imageContainer, isSelected && styles.selectedImageContainer]}>
           <Image source={flags[category.categoryName]} style={styles.image2} />
           <Text style={[styles.text, isSelected && styles.selectedText]}>
             {category.categoryName}
           </Text>
         </View>
-      </View>
+      </Animated.View>
     </TouchableOpacity>
   );
 };

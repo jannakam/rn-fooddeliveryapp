@@ -1,5 +1,16 @@
-import React from "react";
-import { View, TouchableOpacity, StyleSheet, Image, SafeAreaView, Platform, StatusBar, Text } from "react-native";
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  SafeAreaView,
+  Platform,
+  StatusBar,
+  Text,
+  Animated,
+  Easing,
+} from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../constants/colors";
@@ -8,17 +19,62 @@ import { useCart } from "../context/CartContext";
 const Header = () => {
   const navigation = useNavigation();
   const { cartItems } = useCart();
+  const badgeScale = useRef(new Animated.Value(0)).current;
+  const badgeTranslateX = useRef(new Animated.Value(50)).current;
+  const prevCount = useRef(0);
 
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  useEffect(() => {
+    const currentCount = getTotalItems();
+    
+    if (currentCount > prevCount.current) {
+      // First item added - slide in from right
+      if (prevCount.current === 0) {
+        badgeScale.setValue(0);
+        badgeTranslateX.setValue(50);
+
+        Animated.parallel([
+          Animated.timing(badgeScale, {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
+          }),
+          Animated.timing(badgeTranslateX, {
+            toValue: 0,
+            duration: 300,
+            easing: Easing.out(Easing.back(1.5)),
+            useNativeDriver: true,
+          }),
+        ]).start();
+      } 
+      // Subsequent items - just bounce
+      else {
+        Animated.sequence([
+          Animated.timing(badgeScale, {
+            toValue: 1.3,
+            duration: 100,
+            useNativeDriver: true,
+          }),
+          Animated.spring(badgeScale, {
+            toValue: 1,
+            friction: 3,
+            tension: 200,
+            useNativeDriver: true,
+          }),
+        ]).start();
+      }
+    }
+    prevCount.current = currentCount;
+  }, [cartItems]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.header}>
-        {/* Back Button */}
         <View style={styles.backButton}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.roundBorder}
             onPress={() => navigation.goBack()}
           >
@@ -26,22 +82,33 @@ const Header = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Logo */}
         <View style={styles.logoContainer}>
-          <Image source={require("../../assets/logo2.png")} style={styles.logo} />
+          <Image
+            source={require("../../assets/logo2.png")}
+            style={styles.logo}
+          />
         </View>
 
-        {/* Cart Icon with Badge */}
         <View style={styles.rightIcons}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.iconContainer}
-            onPress={() => navigation.navigate('Cart')}
+            onPress={() => navigation.navigate("Cart")}
           >
             <Feather name="shopping-cart" size={24} color={COLORS.WHITE} />
             {getTotalItems() > 0 && (
-              <View style={styles.badge}>
+              <Animated.View 
+                style={[
+                  styles.badge,
+                  {
+                    transform: [
+                      { scale: badgeScale },
+                      { translateX: badgeTranslateX }
+                    ]
+                  }
+                ]}
+              >
                 <Text style={styles.badgeText}>{getTotalItems()}</Text>
-              </View>
+              </Animated.View>
             )}
           </TouchableOpacity>
         </View>
@@ -55,10 +122,10 @@ export default Header;
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: COLORS.PRIMARY,
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
   header: {
-    height: 70, 
+    height: 70,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -76,9 +143,9 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   logo: {
-    width: "30%", 
+    width: "30%",
     height: "100%",
-    resizeMode: "contain", 
+    resizeMode: "contain",
   },
   rightIcons: {
     alignItems: "center",
@@ -95,23 +162,23 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     padding: 8,
-    position: 'relative',
+    position: "relative",
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     right: 0,
     top: 0,
     backgroundColor: COLORS.ACCENT,
     borderRadius: 12,
     minWidth: 20,
     height: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     paddingHorizontal: 4,
   },
   badgeText: {
     color: COLORS.WHITE,
-    fontSize: 12,
-    fontFamily: 'OpenSans_700Bold',
+    fontSize: 10,
+    fontFamily: "OpenSans_700Bold",
   },
 });

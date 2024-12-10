@@ -183,7 +183,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 5,
-    color: "#333",
+    color: COLORS.SECONDARY,
+    fontFamily: 'OpenSans_700Bold',
   },
   infoRow: {
     flexDirection: "row",

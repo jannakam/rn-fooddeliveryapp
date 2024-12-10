@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,24 +10,24 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import myFood from '../data/myFood';
-import COLORS from '../constants/colors';
-import { useCart } from '../context/CartContext';
-import { useNavigation } from '@react-navigation/native';
-import IngredientsList from '../components/IngredientsList';
+} from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
+import myFood from "../data/myFood";
+import COLORS from "../constants/colors";
+import { useCart } from "../context/CartContext";
+import { useNavigation } from "@react-navigation/native";
+import IngredientsList from "../components/IngredientsList";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const Detail = ({ route }) => {
   const { menuItem } = route.params;
   const [quantity, setQuantity] = useState(1);
-  const [fadeAnim] = useState(new Animated.Value(0)); // Animation for image
+  const [fadeAnim] = useState(new Animated.Value(0));
+  const buttonScale = useRef(new Animated.Value(1)).current;
   const { addToCart } = useCart();
   const navigation = useNavigation();
 
-  // Trigger fade-in animation
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 1,
@@ -36,69 +36,90 @@ const Detail = ({ route }) => {
     }).start();
   }, []);
 
+  const animateButton = () => {
+    Animated.sequence([
+      Animated.timing(buttonScale, {
+        toValue: 0.8,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.spring(buttonScale, {
+        toValue: 1,
+        friction: 3,
+        tension: 40,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    animateButton();
+    setQuantity(prev => prev + 1);
   };
 
   const decreaseQuantity = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+    if (quantity > 1) {
+      animateButton();
+      setQuantity(prev => prev - 1);
+    }
   };
 
   const handleAddToCart = () => {
-    // Ensure we have a complete item object
     const itemToAdd = {
       _id: menuItem._id,
       name: menuItem.name,
       price: menuItem.price,
       image: menuItem.image,
       description: menuItem.description,
-      ...menuItem
+      ...menuItem,
     };
-    
+
     addToCart(itemToAdd, quantity);
-    
+    navigation.goBack();
   };
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      {/* SemiCircle Background */}
       <View style={styles.semiCircle} />
 
-      {/* Item Name and Price */}
       <View>
         <Text style={styles.name}>{menuItem.name}</Text>
         <Text style={styles.price}>{menuItem.price} KWD</Text>
       </View>
 
-      {/* Product Image */}
       <View style={styles.imageContainer}>
         <Animated.Image
-          source={myFood[menuItem.name.toLowerCase().trim()] || { uri: menuItem.image }}
+          source={
+            myFood[menuItem.name.toLowerCase().trim()] || {
+              uri: menuItem.image,
+            }
+          }
           style={[styles.image, { opacity: fadeAnim }]}
         />
       </View>
 
-      {/* Quantity Modifier */}
       <View style={styles.quantityModifier}>
         <TouchableOpacity onPress={decreaseQuantity} style={styles.button}>
-          <Icon name="minus" size={16} color={COLORS.WHITE} />
+          <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+            <Icon name="minus" size={16} color={COLORS.WHITE} />
+          </Animated.View>
         </TouchableOpacity>
         <Text style={styles.quantity}>{quantity}</Text>
         <TouchableOpacity onPress={increaseQuantity} style={styles.button}>
-          <Icon name="plus" size={16} color={COLORS.WHITE} />
+          <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
+            <Icon name="plus" size={16} color={COLORS.WHITE} />
+          </Animated.View>
         </TouchableOpacity>
       </View>
 
-      {/* Ingredients List */}
       <View style={styles.ingredientsContainer}>
-        <IngredientsList />
+        <IngredientsList menuItemId={menuItem._id} />
       </View>
 
-      {/* Description */}
       <View style={styles.detailsContainer}>
         <Text style={styles.description}>
           {menuItem.description.length > 100
@@ -107,8 +128,10 @@ const Detail = ({ route }) => {
         </Text>
       </View>
 
-      {/* Add to Cart Button */}
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={handleAddToCart}
+      >
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
@@ -121,13 +144,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.BACKGROUND,
-    justifyContent: 'space-between',
+    justifyContent: "space-between",
   },
   semiCircle: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
-    alignSelf: 'center',
-    width: '125%',
+    alignSelf: "center",
+    width: "125%",
     height: height * 0.23,
     backgroundColor: COLORS.PRIMARY,
     borderBottomLeftRadius: width,
@@ -136,7 +159,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     zIndex: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   image: {
     width: width * 0.8,
@@ -148,43 +171,43 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: "center",
     color: COLORS.WHITE,
     zIndex: 10,
   },
   price: {
     fontSize: 18,
     marginVertical: 5,
-    textAlign: 'center',
+    textAlign: "center",
     zIndex: 10,
     color: COLORS.WHITE,
   },
   description: {
     fontSize: 16,
     color: COLORS.SECONDARY,
-    textAlign: 'center',
+    textAlign: "center",
     lineHeight: 24,
   },
   quantityModifier: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     gap: 10,
     paddingVertical: 10,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   button: {
     padding: 10,
     borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: COLORS.ACCENT,
   },
   quantity: {
     fontSize: 18,
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: "OpenSans_700Bold",
     color: COLORS.SECONDARY,
   },
   addToCartButton: {
@@ -193,12 +216,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 40,
     borderRadius: 30,
-    alignItems: 'center',
+    alignItems: "center",
   },
   addToCartText: {
     color: COLORS.WHITE,
     fontSize: 16,
-    fontFamily: 'OpenSans_700Bold',
+    fontFamily: "OpenSans_700Bold",
   },
   ingredientsContainer: {
     height: height * 0.1,
