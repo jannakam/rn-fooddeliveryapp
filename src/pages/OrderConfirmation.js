@@ -163,12 +163,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     color: COLORS.PRIMARY,
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
+    fontFamily: 'OpenSans_400Regular',
     color: COLORS.SECONDARY,
     marginBottom: 30,
   },
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
   },
   detailsTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     color: COLORS.PRIMARY,
     marginBottom: 15,
   },
@@ -192,11 +193,12 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 14,
+    fontFamily: 'OpenSans_400Regular',
     color: COLORS.SECONDARY,
   },
   detailValue: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'OpenSans_600SemiBold',
     color: COLORS.PRIMARY,
   },
   button: {
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.WHITE,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
   },
 });
 

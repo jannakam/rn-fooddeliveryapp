@@ -112,6 +112,6 @@ const styles = StyleSheet.create({
   badgeText: {
     color: COLORS.WHITE,
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
   },
 });

@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     marginTop: -25,
     color: 'white',
   },

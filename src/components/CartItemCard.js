@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   itemName: {
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     fontSize: 16,
     color: COLORS.PRIMARY, 
     marginBottom: 5,
@@ -91,9 +91,10 @@ const styles = StyleSheet.create({
   itemDescription: {
     color: COLORS.SECONDARY, 
     fontSize: 12,
+    fontFamily: 'OpenSans_400Regular',
   },
   price: {
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_600SemiBold',
     fontSize: 14,
     color: COLORS.SECONDARY, 
     marginTop: 5,
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 14,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_600SemiBold',
     marginHorizontal: 10,
   },
 });

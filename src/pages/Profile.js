@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 18,
-        fontWeight: "600",
+        fontFamily: "OpenSans_600SemiBold",
         color: COLORS.PRIMARY,
     },
     editButton: {
@@ -406,7 +406,7 @@ const styles = StyleSheet.create({
     editButtonText: {
         color: COLORS.ACCENT,
         fontSize: 14,
-        fontWeight: '500',
+        fontFamily: "OpenSans_600SemiBold",
     },
     detailRow: {
         flexDirection: "row",
@@ -417,11 +417,12 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         color: COLORS.SECONDARY,
-        fontWeight: "500",
+        fontFamily: "OpenSans_600SemiBold",
     },
     value: {
         fontSize: 16,
         color: COLORS.SECONDARY,
+        fontFamily: "OpenSans_400Regular",
     },
     addressCard: {
         borderBottomWidth: 1,
@@ -431,7 +432,7 @@ const styles = StyleSheet.create({
     },
     addressName: {
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: "OpenSans_600SemiBold",
         color: COLORS.PRIMARY,
         marginBottom: 5,
     },
@@ -439,6 +440,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: COLORS.SECONDARY,
         marginBottom: 2,
+        fontFamily: "OpenSans_400Regular",
     },
     paymentCard: {
         flexDirection: 'row',
@@ -464,7 +466,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: COLORS.WHITE,
         fontSize: 16,
-        fontWeight: "500",
+        fontFamily: "OpenSans_600SemiBold",
     },
     logoutButton: {
         flexDirection: 'row',
@@ -481,12 +483,12 @@ const styles = StyleSheet.create({
     logoutButtonText: {
         color: COLORS.WHITE,
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: "OpenSans_700Bold",
     },
     points: {
         fontSize: 14,
         color: COLORS.MUTED, 
-        fontWeight: "500",
+        fontFamily: "OpenSans_600SemiBold",
         marginTop: 5,
     },
     modalContainer: {
@@ -533,7 +535,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         color: COLORS.WHITE,
         fontSize: 20,
-        fontWeight: 'bold',
+        fontFamily: "OpenSans_700Bold",
     },
     closeButton: {
         padding: 5,

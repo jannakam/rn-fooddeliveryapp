@@ -206,14 +206,16 @@ const styles = StyleSheet.create({
   },
   keywordText: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: "OpenSans_700Bold",
     textTransform: "capitalize",
   },
   activeKeywordText: {
     color: COLORS.WHITE,
+    fontFamily: "OpenSans_600SemiBold",
   },
   inactiveKeywordText: {
     color: COLORS.SECONDARY + '80', // 80 is for opacity
+    fontFamily: "OpenSans_400Regular",
   },
   resultsContainer: {
     paddingHorizontal: 5,
@@ -235,7 +237,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: COLORS.SECONDARY,
     fontSize: 16,
-
+    fontFamily: "OpenSans_400Regular",
   },
   row: {
     justifyContent: "space-between", // Ensure items are evenly distributed

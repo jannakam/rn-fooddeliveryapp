@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     color: COLORS.SECONDARY,
   },
   addToCartButton: {
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   addToCartText: {
     color: COLORS.WHITE,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
   },
   ingredientsContainer: {
     height: height * 0.1,

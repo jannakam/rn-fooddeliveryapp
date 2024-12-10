@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 32,
-        fontWeight: 'bold',
+        fontFamily: 'OpenSans_700Bold',
         marginBottom: 10,
         color: COLORS.WHITE,
         textAlign: 'center',
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
         color: COLORS.MUTED,
         marginBottom: 40,
         textAlign: 'center',
+        fontFamily: 'OpenSans_400Regular',
     },
     avatarGrid: {
         flexDirection: 'row',
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: COLORS.WHITE,
         fontSize: 16,
-        fontWeight: 'bold',
+        fontFamily: 'OpenSans_700Bold',
     },
     backButton: {
         position: 'absolute',

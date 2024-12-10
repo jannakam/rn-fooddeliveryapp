@@ -290,13 +290,14 @@ const styles = StyleSheet.create({
   },
   stepText: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: 'OpenSans_600SemiBold',
     color: COLORS.PRIMARY,
   },
   stepTime: {
     fontSize: 12,
     color: COLORS.SECONDARY,
     marginTop: 2,
+    fontFamily: 'OpenSans_400Regular',
   },
   mapContainer: {
     height: 200,

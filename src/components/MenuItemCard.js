@@ -217,20 +217,21 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    backgroundColor: COLORS.BACKGROUND_LIGHT_TRANSPARENT,
-    shadowColor: COLORS.SHADOW,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
+    backgroundColor: COLORS.SECONDARY + "15",
+    // shadowColor: COLORS.SHADOW,
+    // shadowOffset: { width: 0, height: 4 },
+    // shadowOpacity: 0.2,
     elevation: 2,
     borderRadius: 10,
     padding: 15,
+    paddingBottom: 25,
     marginTop: 30, // Push content down to avoid overlapping with the image
-    height: 270,
+    height: 290,
     justifyContent: "space-between",
     alignItems: "center",
   },
   itemName: {
-    fontWeight: "bold",
+    fontFamily: 'OpenSans_700Bold',
     fontSize: 16,
     textAlign: "center",
     marginTop: 50,
@@ -240,11 +241,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: "center",
     fontSize: 12,
+    fontFamily: 'OpenSans_400Regular',
   },
   price: {
-    fontWeight: "bold",
+    fontFamily: 'OpenSans_600SemiBold',
     fontSize: 14,
-    color: "#442e54",
+    color: COLORS.SECONDARY,
     textAlign: "center",
   },
   actionsColumn: {
@@ -275,7 +277,7 @@ const styles = StyleSheet.create({
   },
   quantity: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: 'OpenSans_600SemiBold',
     minWidth: 30,
     textAlign: "center",
   },
@@ -289,7 +291,7 @@ const styles = StyleSheet.create({
   },
   addButtonText: {
     color: COLORS.WHITE,
-    fontWeight: "bold",
+    fontFamily: 'OpenSans_700Bold',
     fontSize: 14,
   },
 });

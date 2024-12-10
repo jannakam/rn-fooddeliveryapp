@@ -124,13 +124,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     flex: 1,
     color: COLORS.PRIMARY,
   },
   rating: {
     color: COLORS.WHITE,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_600SemiBold',
     fontSize: 12,
   },
   row: {
@@ -142,14 +142,17 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     color: COLORS.SECONDARY,
     fontSize: 12,
+    fontFamily: 'OpenSans_400Regular',
   },
   deliveryTime: {
     fontSize: 12,
     color: COLORS.PRIMARY,
+    fontFamily: 'OpenSans_400Regular',
   },
   category: {
     fontSize: 12,
     color: COLORS.SECONDARY,
     marginVertical: 5,
+    fontFamily: 'OpenSans_400Regular',
   },
 });

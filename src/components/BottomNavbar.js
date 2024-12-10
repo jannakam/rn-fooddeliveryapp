@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     color: "#442e54",
+    fontFamily: 'OpenSans_400Regular',
   },
   exploreButton: {
     alignItems: "center",
@@ -84,6 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 8,
     color: "white",
+    fontFamily: 'OpenSans_400Regular',
   },
 });
 

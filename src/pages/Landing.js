@@ -188,8 +188,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 32,
-    fontWeight: 'bold',
+    fontSize: 30,
+    fontFamily: 'OpenSans_700Bold',
     color: COLORS.WHITE,
     marginBottom: 10,
     textAlign: 'center',
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     textAlign: 'center',
     opacity: 0.8,
+    fontFamily: 'OpenSans_400Regular',
   },
   pagination: {
     flexDirection: 'row',

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "OpenSans_700Bold",
     color: COLORS.WHITE,
   },
   categoryContainer: {
@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 40,
     color: COLORS.WHITE,
+    fontFamily: "OpenSans_400Regular",
   },
   skeletonContainer: {
     alignItems: 'center',

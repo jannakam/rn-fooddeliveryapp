@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   deliveryTime: {
     fontSize: 14,
     color: "gray",
+    fontFamily: 'OpenSans_400Regular',
   },
   ratingRow: {
     flexDirection: "row",
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
   },
   ratingLabel: {
     fontSize: 14,
-    fontWeight: "bold",
+    fontFamily: 'OpenSans_700Bold',
   },
   itemsContainer: {
     flex: 1,
@@ -236,5 +237,6 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     color: "gray",
+    fontFamily: 'OpenSans_400Regular',
   },
 });

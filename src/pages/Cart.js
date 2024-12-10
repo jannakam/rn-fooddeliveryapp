@@ -244,12 +244,13 @@ const styles = StyleSheet.create({
   },
   addressHeaderText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'OpenSans_600SemiBold',
     color: COLORS.PRIMARY,
   },
   dropdownIcon: {
     fontSize: 14,
     color: '#442e54',
+    fontFamily: 'OpenSans_400Regular',
   },
   addressList: {
     borderTopWidth: 1,
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
   },
   addressName: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'OpenSans_600SemiBold',
     color: '#442e54',
     marginBottom: 4,
   },
@@ -273,6 +274,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginBottom: 2,
+    fontFamily: 'OpenSans_400Regular',
   },
   checkoutButtonDisabled: {
     backgroundColor: '#9c9c9c',
@@ -286,5 +288,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.SECONDARY,
     marginTop: 10,
+    fontFamily: 'OpenSans_400Regular',
   },
 });

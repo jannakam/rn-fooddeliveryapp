@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
     color: COLORS.WHITE,
     fontSize: 12,
     textAlign: 'center',
+    fontFamily: 'OpenSans_400Regular',
   },
   buttonContainer: {
     width: '100%',
@@ -298,16 +299,17 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: COLORS.WHITE,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
   },
   registerText: {
     color: COLORS.ACCENT,
-    fontWeight: 'bold',
+    fontFamily: 'OpenSans_700Bold',
     fontSize: 16,
   },
   registerPrompt: {
     color: COLORS.WHITE,
     fontSize: 16,
+    fontFamily: 'OpenSans_400Regular',
   },
   registerContainer: {
     marginTop: 30,
