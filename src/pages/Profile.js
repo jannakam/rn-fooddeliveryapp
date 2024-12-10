@@ -143,9 +143,8 @@ const Profile = () => {
                 style={styles.container}
                 bounces={false}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.scrollContent}
+                stickyHeaderIndices={[1]}
             >
-                {/* Header with Profile Image */}
                 <View style={styles.header}>
                     <View style={styles.avatarContainer}>
                         <Image
@@ -170,86 +169,90 @@ const Profile = () => {
                     <Text style={styles.points}>Points: {Math.floor(Math.random() * 1000)}</Text>
                 </View>
 
-                {/* User Details */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>User Details</Text>
-                        <TouchableOpacity style={styles.editButton}>
-                            <Text style={styles.editButtonText}>Edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Name:</Text>
-                        <Text style={styles.value}>{profile.username}</Text>
-                    </View>
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Email:</Text>
-                        <Text style={styles.value}>{profile?.username}@wainik.com</Text>
-                    </View>
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Phone:</Text>
-                        <Text style={styles.value}>+965 9449 9371</Text>
-                    </View>
-                </View>
+                <View style={styles.contentContainer}>
+                    <ScrollView 
+                        style={styles.contentScroll}
+                        showsVerticalScrollIndicator={false}
+                        nestedScrollEnabled={true}
 
-                {/* Addresses */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>Delivery Addresses</Text>
-                        <View style={styles.headerButtons}>
-                            <TouchableOpacity style={styles.addButton}>
-                                <Text style={styles.editButtonText}>Add</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.editButton}>
-                                <Text style={styles.editButtonText}>Edit</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    {addresses.map((address) => (
-                        <View key={address.id} style={styles.addressCard}>
-                            <Text style={styles.addressName}>{address.name}</Text>
-                            <Text style={styles.addressText}>{address.street}</Text>
-                            <Text style={styles.addressText}>{address.area}, {address.block}</Text>
-                            <Text style={styles.addressText}>{address.building}</Text>
-                        </View>
-                    ))}
-                </View>
-
-                {/* Payment Methods */}
-                <View style={styles.section}>
-                    <View style={styles.sectionHeader}>
-                        <Text style={styles.sectionTitle}>Payment Methods</Text>
-                        <TouchableOpacity style={styles.editButton}>
-                            <Text style={styles.editButtonText}>Edit</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {paymentMethods.map((method) => (
-                        <View key={method.id} style={styles.paymentCard}>
-                            <View style={styles.paymentInfo}>
-                                <MaterialIcons 
-                                    name={method.type.toLowerCase() === 'visa' ? 'credit-card' : 'credit-card'} 
-                                    size={24} 
-                                    color={COLORS.SECONDARY} 
-                                />
-                                <Text style={styles.value}>{method.type} **** {method.last4}</Text>
+                    >
+                        <View style={styles.section}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.sectionTitle}>User Details</Text>
+                                <TouchableOpacity style={styles.editButton}>
+                                    <Text style={styles.editButtonText}>Edit</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={styles.detailRow}>
+                                <Text style={styles.label}>Name:</Text>
+                                <Text style={styles.value}>{profile.username}</Text>
+                            </View>
+                            <View style={styles.detailRow}>
+                                <Text style={styles.label}>Email:</Text>
+                                <Text style={styles.value}>{profile?.username}@wainik.com</Text>
+                            </View>
+                            <View style={styles.detailRow}>
+                                <Text style={styles.label}>Phone:</Text>
+                                <Text style={styles.value}>+965 9449 9371</Text>
                             </View>
                         </View>
-                    ))}
+
+                        <View style={styles.section}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.sectionTitle}>Delivery Addresses</Text>
+                                <View style={styles.headerButtons}>
+                                    <TouchableOpacity style={styles.addButton}>
+                                        <Text style={styles.editButtonText}>Add</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={styles.editButton}>
+                                        <Text style={styles.editButtonText}>Edit</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            {addresses.map((address) => (
+                                <View key={address.id} style={styles.addressCard}>
+                                    <Text style={styles.addressName}>{address.name}</Text>
+                                    <Text style={styles.addressText}>{address.street}</Text>
+                                    <Text style={styles.addressText}>{address.area}, {address.block}</Text>
+                                    <Text style={styles.addressText}>{address.building}</Text>
+                                </View>
+                            ))}
+                        </View>
+
+                        <View style={styles.section}>
+                            <View style={styles.sectionHeader}>
+                                <Text style={styles.sectionTitle}>Payment Methods</Text>
+                                <TouchableOpacity style={styles.editButton}>
+                                    <Text style={styles.editButtonText}>Edit</Text>
+                                </TouchableOpacity>
+                            </View>
+                            {paymentMethods.map((method) => (
+                                <View key={method.id} style={styles.paymentCard}>
+                                    <View style={styles.paymentInfo}>
+                                        <MaterialIcons 
+                                            name={method.type.toLowerCase() === 'visa' ? 'credit-card' : 'credit-card'} 
+                                            size={24} 
+                                            color={COLORS.SECONDARY} 
+                                        />
+                                        <Text style={styles.value}>{method.type} **** {method.last4}</Text>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => navigation.navigate('OrderHistory')}
+                        >
+                            <Text style={styles.buttonText}>View Order History</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                            <MaterialIcons name="logout" size={20} color={COLORS.WHITE} />
+                            <Text style={styles.logoutButtonText}>Logout</Text>
+                        </TouchableOpacity>
+                    </ScrollView>
                 </View>
-
-                {/* Order History Button */}
-                <TouchableOpacity 
-                    style={styles.button}
-                    onPress={() => navigation.navigate('OrderHistory')}
-                >
-                    <Text style={styles.buttonText}>View Order History</Text>
-                </TouchableOpacity>
-
-                {/* Logout Button */}
-                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                    <MaterialIcons name="logout" size={20} color={COLORS.WHITE} />
-                    <Text style={styles.logoutButtonText}>Logout</Text>
-                </TouchableOpacity>
             </ScrollView>
 
             <Modal
@@ -315,11 +318,23 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: COLORS.BACKGROUND,
     },
-    scrollContent: {
-        flexGrow: 1,
+    header: {
+        alignItems: 'center',
+        padding: 20,
+        backgroundColor: COLORS.PRIMARY,
         paddingBottom: 30,
+    },
+    contentContainer: {
+        backgroundColor: COLORS.BACKGROUND,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        height: Dimensions.get('window').height - 230,
+    },
+    contentScroll: {
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        paddingBottom: 40,
     },
     loadingContainer: {
         flex: 1,
@@ -331,11 +346,6 @@ const styles = StyleSheet.create({
         color: COLORS.TEXT_SECONDARY,
         fontSize: 16,
         marginTop: 10,
-    },
-    header: {
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: COLORS.PRIMARY,
     },
     avatarContainer: {
         position: 'relative',
@@ -364,8 +374,6 @@ const styles = StyleSheet.create({
         fontFamily: 'OpenSans_600SemiBold',
     },
     section: {
-        marginHorizontal: 20,
-        marginTop: 20,
         backgroundColor: "white",
         padding: 20,
         borderRadius: 10,
@@ -374,6 +382,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         shadowOffset: { width: 0, height: 2 },
         elevation: 3,
+        marginBottom: 20,
     },
     sectionHeader: {
         flexDirection: 'row',
